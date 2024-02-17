@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="homepage.css">
     <title>homepage</title>
+    
 </head>
 <body>
-    
+    <img src="logo-banner.png" alt="logo" width="15%">
+    <div class="container" >
+        <div class="title">What would you like to check for?</div>
+        <form method="POST">
+            <div class="analysisChoice">
+                <div class="check-box">
+                    <input type="checkbox" id="totalWords" > Total number of words
+                  
+                </div>
+                <div class="check-box">
+                    <input type="checkbox" id="typeToken" > Type token ratio
+                  
+                </div>
+                <div class="check-box">
+                    <input type="checkbox" id="totalClauses" > Total number of claused
+                    
+                </div>
+                <div class="check-box">
+                    <input type="checkbox" id="verbErr" > Verb errors
+                    
+                </div>
+            </div>
+            
+        </form>
+        </div>
+
+    </div>
+        <button id = "submitButton">Submit</button>
 </body>
 </html>
