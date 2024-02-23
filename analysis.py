@@ -1,5 +1,5 @@
 import spacy
-from morphemes import Morphemes
+#from morphemes import Morphemes
 from flask import Flask, request, render_template
 from gramformer import Gramformer
 import torch
