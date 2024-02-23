@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
     <link rel="icon" href="/static/images/logo-small.png">
     <title>homepage</title>
+
 </head>
 
 <!-- This is the ENTIRE homepage space -->
 <body>
-
     <!-- [ HEAD BAR ] -->
     <header class = "headbar">
         <div>
+
             <img src="/static/images/logo-banner.png" alt="Logo-small" class="logo-small"> 
         </div>
         <button class="about-btn">About</button>
     </header>
-    
+
 
     <!-- [ MAIN BODY ] *below head bar*-->
     <div class="container">
-        
+
 
         <div class = "choice-box">
             <div class="title">What would you like to check for?</div>
+
             <form method="POST" action="/analyze_text">
                 <div class="analysisChoice">
 
@@ -34,28 +36,40 @@
                     </div>
 
                     <div class="check-box">
+
+
                         <input type="checkbox" id="differentWords" value="differentWords" name="analysis" > Number of different words
                     </div>
 
                     <div class="check-box">
+ 
+
                         <input type="checkbox" id="typeToken" value="typeToken" name="analysis" > Type token ratio
                     </div>
 
                     <div class="check-box">
+
+
                         <input type="checkbox" id="totalClauses" value="totalClauses" name="analysis"> Total number of claused
                     </div>
 
                     <div class="check-box">
                         <input type="checkbox" id="verbErr" value="verbErr" name="analysis" > Verb errors
                     </div>
-             
+
+                    <div class="check-box">
+                        <input type="checkbox" id="morpheme" value="morpheme" name="analysis" > Morphemes
+                    </div>
+
                 </div>
-                
+
+
                   <textarea class="input-box" name="text" placeholder="Please type or copy and paste text here" ></textarea>
-                  
+
                   <button id = "submitButton">Submit</button>    
 
             </form>
+
             <p>{{ results }}</p>
             </div>
         </div>
@@ -66,7 +80,6 @@
             <img src="/static/images/logo-banner.png" alt="logo" width="15%" class = "logo-banner">
         </footer>
         
-
     </div> <!-- End of MAIN BODY -->
     
     </body>
