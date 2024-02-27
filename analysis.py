@@ -38,6 +38,8 @@ def analyze_text():
         results['differentWords'] = different_words(text)
     if 'typeToken' in selected_analysis:
         results['typeToken'] = type_token_ratio(text)
+    if 'totalClauses' in selected_analysis:
+        results['totalClauses'] = num_clauses(text)
     if 'morpheme' in selected_analysis:
         results['morpheme'] = morph(text)
     if 'verbErr' in selected_analysis:
@@ -69,7 +71,20 @@ def type_token_ratio(text):
     uniqueCount = different_words(text)
     return round((uniqueCount/totalCount),2)
 
-# REQUIREMENT - Verb errors
+# REQUIREMENT 5 - Number of clauses
+@app.route('/num_clauses', methods=['POST'])
+def num_clauses(text):
+    doc = nlp(text)
+    clause_count = 0
+    # Analyze each sentence for clauses
+    for sentence in doc.sents:
+        # Count the number of clauses in the sentence
+        clauses = [token for token in sentence if token.dep_ == "ROOT"]
+        clause_count += len(clauses)
+
+    return clause_count
+
+# REQUIREMENT 8 - Verb errors
 @app.route('/verbErr', methods=['POST'])
 def verbEs(texts):
     doc = nlp(texts)
@@ -92,7 +107,7 @@ def verbEs(texts):
         print("-" *100)
     return(counter)
 
-# REQUIREMENT - Morphemes
+# REQUIREMENT 4 - Morphemes
 @app.route('/morpheme', methods=['POST'])
 def morph(text):
     doc =nlp(text)
