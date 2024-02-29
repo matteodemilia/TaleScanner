@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <link rel="icon" href="/static/images/logo-small.png">
+    <title>homepage</title>
+
+</head>
+
+<!-- This is the ENTIRE homepage space -->
+<body>
+    <!-- [ HEAD BAR ] -->
+    <header class = "headbar">
+        <div>
+
+            <img src="/static/images/logo-banner.png" alt="Logo-small" class="logo-small" height="30px" width="30px"> 
+        </div>
+        <button class="about-btn">About</button>
+    </header>
+
+    <h3> RESULTS</h3>
+
+
+    <!-- [ MAIN BODY ] *below head bar*-->
+    <div class="container">
+          
+          <p class="textInfo">Text:</p> <br> <br> <br>
+          <p>{{ text }}</p>
+        <!-- Footer of main dashboard
+        <footer class = "footer"> 
+            <img src="/static/images/logo-banner.png" alt="logo" width="15%" class = "logo-banner">
+        </footer>
+ -->
+    </div> <!-- End of MAIN BODY -->
+
+    <!-- start of analysis container-->
+    <div class="container-analysis">
+    <p class="results"> <strong> Results: </strong> </p>
+
+  
+    <div class="result">
+        <p><strong>Total Words:</strong> {{ totalwords }}</p>
+        <p><strong>Different Words:</strong> {{ differentwords }}</p>
+        <p><strong>Type Token:</strong> {{ typetoken }}</p>
+        <p><strong>Morphemes:</strong> {{ morphemes }}</p>
+        <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+        <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
+    </div>
+
+    </div>
+    <!-- end of analysis container-->
+    </body>
+</html>
