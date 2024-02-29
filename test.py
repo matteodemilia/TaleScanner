@@ -38,7 +38,6 @@ class TestAnalysis(unittest.TestCase):
         result = total_words(text)
         self.assertEqual(result, expected_result)
 
-
     def test_different_words(self):
         text = "this This thIs THIS tHiS has three."
         expected_result = 3
@@ -73,10 +72,15 @@ class TestAnalysis(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
         text = "He went to the store and bought some groceries"
+        expected_result = 2
+        result = num_clauses(text)
+        self.assertEqual(result, expected_result)
+
+        # where the code fails
+        text = "He bought apples, oranges, and bananas."
         expected_result = 1
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
-    
 
 if __name__ == '__main__':
     unittest.main()
