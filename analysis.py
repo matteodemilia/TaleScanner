@@ -1,6 +1,6 @@
 import spacy
 #from morphemes import Morphemes
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 from gramformer import Gramformer
 import torch
 
@@ -79,8 +79,7 @@ def num_clauses(text):
    # Initialize a list to store the clauses
     clauses = []
     current_clause = []
-    conjunctions = {'and', 'but', 'so', 'because'}
-
+    conjunctions = {'and', 'but', 'so', 'because', 'if'}
 
     for token in doc:
         # If the token is a punctuation that ends a clause or a coordinating conjunction
@@ -95,7 +94,8 @@ def num_clauses(text):
     if current_clause:
         clauses.append(current_clause)
 
-    return len(clauses)
+    #print(f"Clauses: {clauses}")
+    return clauses
 
 # REQUIREMENT 8 - Verb errors
 @app.route('/verbErr', methods=['POST'])
