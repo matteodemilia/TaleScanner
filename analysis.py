@@ -95,15 +95,32 @@ def type_token_ratio(text):
 # REQUIREMENT 5 - Number of clauses
 @app.route("/num_clauses", methods=["POST"])
 def num_clauses(text):
-    doc = nlp(text)
-    clause_count = 0
-    # Analyze each sentence for clauses
-    for sentence in doc.sents:
-        # Count the number of clauses in the sentence
-        clauses = [token for token in sentence if token.dep_ == "ROOT"]
-        clause_count += len(clauses)
+    # empty string
+    if(text == " "):
+        return 0;
+    else:
+        doc = nlp(text)
 
-    return clause_count
+        clauses = []
+        current_clause = []
+        conjunctions = {'and', 'but', 'so', 'because', 'if', 'or', 'yet', 'nor', 'while', 
+                        'although', 'though', 'since', 'unless', 'whereas', 'whether'}
+
+        for token in doc:
+            # If the token is a punctuation that ends a clause or a coordinating conjunction
+            if token.text in ['.', ';', ',', ':', '?', '!'] or (token.pos_ == 'CCONJ') or (token.text.lower() in conjunctions):
+                if current_clause:
+                    clauses.append(current_clause)
+                    current_clause = []
+            else:
+                current_clause.append(token.text)
+
+        # Add the last clause to the list if it's not empty
+        if current_clause:
+            clauses.append(current_clause)
+
+        #print(f"Clauses: {clauses}")
+        return len(clauses)
 
 
 # REQUIREMENT 8 - Verb errors
