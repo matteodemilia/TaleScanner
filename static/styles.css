@@ -26,6 +26,10 @@
     /* Maintain aspect ratio */
   }
   
+  .title-banner{
+    font-size: 38px;
+  }
+
   .about-btn {
     font-size: 16px;
     padding: 8px 16px;
