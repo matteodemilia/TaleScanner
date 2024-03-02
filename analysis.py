@@ -32,7 +32,12 @@ def index():
 def results():
     return render_template("resultspage.html")
 
-# Gets input from checkbox
+# about page
+@app.route("/aboutpage")
+def about():
+    return render_template("aboutpage.html")
+
+# Gets input from homepage checkbox
 @app.route("/analyze_text", methods=["POST"])
 def analyze_text():
     text = request.form["text"]

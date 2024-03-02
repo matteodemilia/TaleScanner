@@ -13,13 +13,27 @@
 <body>
     <!-- [ HEAD BAR ] -->
     <header class = "headbar">
-        <div>
+        <div id ="homepageButton">
 
             <img src="/static/images/logo-small.png" alt="Logo-small" class="logo-small" > 
         </div>
         <p class = "title-banner">Tale Scanner</p>
-        <button class="about-btn">About</button>
+        <button class="about-btn" id = "about-btn">About</button>
     </header>
+
+    <!-- Script that handles the headbar buttons -->
+    <script type="text/javascript">
+        document.getElementById("homepageButton").onclick = function () {
+        
+            location.href = "/";
+        };
+        
+        document.getElementById("about-btn").onclick = function() {
+        
+            location.href ="/aboutpage"
+        };
+    </script> 
+
 
     <h3> RESULTS</h3>
 

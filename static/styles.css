@@ -25,6 +25,12 @@
     height: auto;
     /* Maintain aspect ratio */
   }
+
+  /* hover for icon not currently changing */ 
+  .logo-small:hover {
+    width: 85 px;
+    height: auto;
+  }
   
   .title-banner{
     font-size: 38px;
