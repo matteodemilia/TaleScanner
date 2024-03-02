@@ -27,6 +27,10 @@ path = "./data"
 def index():
     return render_template("homepage.html")
 
+# results page
+@app.route("/resultspage.html")
+def results():
+    return render_template("resultspage.html")
 
 # Gets input from checkbox
 @app.route("/analyze_text", methods=["POST"])
