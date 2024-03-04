@@ -94,3 +94,15 @@
     padding: 10px;
     resize: none;
   }
+
+
+
+  /*  [ ABOUT PAGE ] */ 
+
+  .about-inner-box {
+    list-style-type: none;
+  }
+
+  .about-inner-box li {
+    display: block;
+  }
