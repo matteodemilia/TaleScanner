@@ -21,6 +21,7 @@ nlp = spacy.load("en_core_web_trf")
 app = Flask(__name__, static_folder="static")
 path = "./data"
 
+app.config['FLASK_DEBUG'] = 0
 
 # Homepage when app runs
 @app.route("/")
@@ -114,8 +115,10 @@ def num_clauses(text):
         current_clause = []
         conjunctions = {'and', 'but', 'so', 'because', 'if', 'or', 'yet', 'nor', 'while', 
                         'although', 'though', 'since', 'unless', 'whereas', 'whether'}
-
         for token in doc:
+            if token.dep_ == "cc" and token.head.dep_ == "conj":
+                clauses.append(current_clause)
+                current_clause = []
             # If the token is a punctuation that ends a clause or a coordinating conjunction
             if token.text in ['.', ';', ',', ':', '?', '!'] or (token.pos_ == 'CCONJ') or (token.text.lower() in conjunctions):
                 if current_clause:
@@ -129,7 +132,7 @@ def num_clauses(text):
             clauses.append(current_clause)
 
         #print(f"Clauses: {clauses}")
-        return len(clauses)
+        return clauses
 
 
 # REQUIREMENT 8 - Verb errors
@@ -186,4 +189,4 @@ def morph(text):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
