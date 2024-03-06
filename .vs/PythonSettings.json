@@ -1,3 +1,4 @@
 {
-  "SuppressEnvironmentCreationPrompt": true
+  "SuppressEnvironmentCreationPrompt": true,
+  "TestFramework": "Pytest"
 }

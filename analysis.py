@@ -101,11 +101,19 @@ def morph(text):
         tense = token.morph.get('Tense')
         plur = token.morph.get('Number')
         print(token, tense, plur)
-        if(plur == ['Plur']):
+        if(token.is_punct ==  True ):
+            print("should not be counted")
+            pass
+        elif(token.is_space == True):
+            print("fixing the empty line issue")
+            pass
+        else:
+            if(plur == ['Plur']):
+                counter = counter + 1
+            if(tense == ['Past']):
+                counter = counter + 1
             counter = counter + 1
-        if(tense == ['Past']):
-            counter = counter + 1
-        counter = counter + 1
+            print(counter)
     return counter
     
     ### when using morphemes library
