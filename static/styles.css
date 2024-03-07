@@ -29,7 +29,7 @@
   /* hover for icon not currently changing */ 
   .logo-small:hover {
     width: 85 px;
-    height: auto;
+    cursor: pointer;
   }
   
   .title-banner{
