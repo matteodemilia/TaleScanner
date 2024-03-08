@@ -1,108 +1,121 @@
 /* STYLING Variables */
 :root {
-    --mint: #57CBAB;
-    --baby-blue: #91cdff;
-    --navy-blue: #004e8d;
-    --white-blue: #dcefff;
-  }
-  
-  * {
-    font-family: sans-serif;
-  }
-  
-  /* ---- [ HEADBAR ] ---- */
-  header {
-    background-color: var(--white-blue);
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo-small {
-    width: 80px;
-    /* Set width of logo */
-    height: auto;
-    /* Maintain aspect ratio */
-  }
+  --mint: #57CBAB;
+  --baby-blue: #91cdff;
+  --navy-blue: #004e8d;
+  --white-blue: #dcefff;
+}
 
-  /* hover for icon not currently changing */ 
-  .logo-small:hover {
-    width: 85 px;
-    cursor: pointer;
-  }
-  
-  .title-banner{
-    font-size: 38px;
-  }
+* {
+  font-family: sans-serif;
+}
 
-  .about-btn {
-    font-size: 16px;
-    padding: 8px 16px;
-    border: none;
-    background-color: var(--baby-blue);
-    color: black;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .about-btn:hover {
-    background-color: var(--navy-blue);
-    color: white;
-  }
-  
-  /* ---- [ WEBPAGE BODY ] ---- */
-  
-  /* white-blue section starting just below logo + about  */
-  body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--white-blue);
-  }
-  
-  /* baby-blue section */
-  .container {
-    background-color: var(--baby-blue);
-    display: flex;
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-    margin-left: 40px;
-    margin-right: 40px;
-  }
-  
-  /* Choices + Title container */
-  .choice-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Submit button for main choices */
-  .submitButton {
-    display: flex;
-  }
-  
-  .footer {
-    text-align: center;
-  }
-  
-  /* This is for the input box*/
-  .input-box {
-    width: 800px;
-    height: 300px;
-    padding: 10px;
-    resize: none;
-  }
+/* ---- [ HEADBAR ] ---- */
+header {
+  background-color: var(--white-blue);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-small {
+  width: 80px;
+  /* Set width of logo */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+/* hover for icon not currently changing */
+.logo-small:hover {
+  width: 85 px;
+  cursor: pointer;
+}
+
+.title-banner {
+  font-size: 38px;
+}
+
+.about-btn {
+  font-size: 16px;
+  padding: 8px 16px;
+  border: none;
+  background-color: var(--baby-blue);
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.about-btn:hover {
+  background-color: var(--navy-blue);
+  color: white;
+}
+
+/* ---- [ WEBPAGE BODY ] ---- */
+
+/* white-blue section starting just below logo + about  */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--white-blue);
+}
+
+/* baby-blue section */
+.container {
+  background-color: var(--baby-blue);
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+/* Choices + Title container */
+.choice-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Submit button for main choices */
+.submitButton {
+  display: flex;
+}
+
+.footer {
+  text-align: center;
+}
+
+/* This is for the input box*/
+.input-box {
+  width: 800px;
+  height: 300px;
+  padding: 10px;
+  resize: none;
+}
 
 
 
-  /*  [ ABOUT PAGE ] */ 
+/*  [ ABOUT PAGE ] */
 
-  .about-inner-box {
-    list-style-type: none;
-  }
+.about-inner-box {
+  list-style-type: none;
+}
 
-  .about-inner-box li {
-    display: block;
-  }
+.about-inner-box li {
+  display: block;
+}
+
+/* RESULTS PAGE */
+.textInfo {
+  text-align: center;
+  top: 50px;
+
+  position: relative;
+}
+
+.textInput {
+  text-align: center;
+
+}
