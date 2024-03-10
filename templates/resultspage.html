@@ -52,17 +52,16 @@
 
     <!-- start of analysis container-->
     <div class="container-analysis">
-    <p class="results"> <strong> Results: </strong> </p>
-
   
-    <div class="result">
-        <p><strong>Total Words:</strong> {{ totalwords }}</p>
-        <p><strong>Different Words:</strong> {{ differentwords }}</p>
-        <p><strong>Type Token:</strong> {{ typetoken }}</p>
-        <p><strong>Morphemes:</strong> {{ morphemes }}</p>
-        <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
-        <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
-    </div>
+        <div class="results-display-output">
+            <p class="results-title"> <strong> Results: </strong> </p>
+            <p><strong>Total Words:</strong> {{ totalwords }}</p>
+            <p><strong>Different Words:</strong> {{ differentwords }}</p>
+            <p><strong>Type Token:</strong> {{ typetoken }}</p>
+            <p><strong>Morphemes:</strong> {{ morphemes }}</p>
+            <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+            <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
+        </div>
 
     </div>
     <!-- end of analysis container-->

@@ -201,20 +201,20 @@ def verbEs(texts):
     counter = 0
     assert doc.has_annotation("SENT_START")
     for sent in doc.sents:
-        print(sent.text)
+        # print(sent.text)
         sent1 = sent.text
 
         corrected_sentences = gf.correct(sent1, max_candidates=1)
 
-        print("[Input] ", sent1)
+        # print("[Input] ", sent1)
         test = str(corrected_sentences)
         for corrected_sentence in corrected_sentences:
             counter = counter + 1
             hold = gf.get_edits(sent1, corrected_sentence)
             if hold == []:
-                print("no change")
+                # print("no change")
                 counter = counter - 1
-        print("-" * 100)
+        # print("-" * 100)
     return counter
 
 

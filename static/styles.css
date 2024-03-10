@@ -44,6 +44,7 @@ header {
   color: black;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .about-btn:hover {
@@ -71,6 +72,21 @@ body {
   margin-right: 40px;
 }
 
+/* What would you like to check for? */ 
+.prompt { 
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* This is for the text input box*/
+.input-box {
+  width: 800px;
+  height: 300px;
+  flex: 1;
+  padding: 10px;
+  /*resize: none;*/
+}
+
 /* Choices + Title container */
 .choice-box {
   display: flex;
@@ -78,6 +94,9 @@ body {
   align-items: center;
 }
 
+.check-box {
+  align-items: center;
+}
 /* Submit button for main choices */
 .submitButton {
   display: flex;
@@ -134,14 +153,6 @@ body {
   text-align: center;
 }
 
-/* This is for the input box*/
-.input-box {
-  width: 800px;
-  height: 300px;
-  padding: 10px;
-  resize: none;
-}
-
 
 
 /*  [ ABOUT PAGE ] */
@@ -154,7 +165,7 @@ body {
   display: block;
 }
 
-/* RESULTS PAGE */
+/* [ RESULTS PAGE ]  */
 .textInfo {
   text-align: center;
   top: 50px;
@@ -164,5 +175,15 @@ body {
 
 .textInput {
   text-align: center;
+
+}
+
+/* container that holds all of the results display UNDER INPUT TEXT DISPLAY */
+.container-analysis {
+  background-color: var(--baby-blue);
+  display: flex;
+  padding: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
 
 }
