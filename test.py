@@ -66,23 +66,40 @@ class TestAnalysis(unittest.TestCase):
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
+
+        # independent clause
         text = "The team worked late"
         expected_result = 1
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
+        text = "He bought apples, oranges, and bananas."
+        expected_result = 1
+        result = num_clauses(text)
+        self.assertEqual(result, expected_result)
+
+        # complex - 1 independent clause, 1 dependent
         text = "Because I got surgery, I missed school"
         expected_result = 2
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
-        text = "He went to the store, and bought some groceries"
+        # compound - 2 independent
+        text = "He studied hard for the exam, yet he still didn't do well."
         expected_result = 2
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
-        text = "He bought apples, oranges, and bananas."
-        expected_result = 1
+        # 1 independent, 2 dependent
+        text = "We will start dinner when she arrives, but if she is late, we might have to reheat the food."
+        expected_result = 3
+        result = num_clauses(text)
+        self.assertEqual(result, expected_result)
+
+        # 4 independent
+        text = ("The sun is shining brightly in the sky. I went for a walk in the park."
+        "She sang beautifully. They are playing soccer on the field.")
+        expected_result = 4
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
