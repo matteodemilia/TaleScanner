@@ -79,14 +79,27 @@
 
                   <textarea class="input-box" name="text" placeholder="Please type or copy and paste text here" ></textarea>
 
-                  <button id = "submitButton">Submit</button>   
+                  <button id = "submitButton" onclick="showSpinner()">Submit</button>   
                   
                   <!-- Script for going to results page (currently overruled by python flask call) -->
                  <script type="text/javascript">
-                    document.getElementById("submitButton").onclick = function () {
+                    
+                    // Previous, pre-loading bar
+                    //document.getElementById("submitButton").onclick = function () {
 
+                    //    location.href = "/resultspage";
+                    //}; 
+
+                    function showSpinner() {
+                        //console.log("showSpinner() function called");
+
+                        //console.log("Hiding submit button text");
+                        document.getElementById("submitButton").innerText = '';
+                        //console.log("Adding button loader class");
+                        document.getElementById("submitButton").classList.add("button-loader");
+                        //console.log("Redirecting to results page");
                         location.href = "/resultspage";
-                    };
+                    }
                 </script> 
 
             </form>
