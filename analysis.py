@@ -101,6 +101,37 @@ def type_token_ratio(text):
     uniqueCount = different_words(text)
     return round((uniqueCount / totalCount), 2)
 
+# finds the root token of a sentence, usually the main verb
+# in instances there is a dependent clause, it is the verb of the independent clause
+def find_root_of_sentence(doc):
+    root_token = None
+    for token in doc:
+        if (token.dep_ == "ROOT"):
+            root_token = token
+    return root_token
+
+# find the other verbs in the sentence
+def find_other_verbs(doc, root_token):
+    other_verbs = []
+    for token in doc:
+        ancestors = list(token.ancestors)
+        if (token.pos_ == "VERB" and len(ancestors) == 1\
+            and ancestors[0] == root_token):
+            other_verbs.append(token)
+    return other_verbs
+
+# find the token spans for each verb
+def get_clause_token_span_for_verb(verb, doc, all_verbs):
+    first_token_index = len(doc)
+    last_token_index = 0
+    this_verb_children = list(verb.children)
+    for child in this_verb_children:
+        if (child not in all_verbs):
+            if (child.i < first_token_index):
+                first_token_index = child.i
+            if (child.i > last_token_index):
+                last_token_index = child.i
+    return(first_token_index, last_token_index)
 
 # REQUIREMENT 5 - Number of clauses
 @app.route("/num_clauses", methods=["POST"])
@@ -108,18 +139,17 @@ def num_clauses(text):
     # empty string
     if(text == " "):
         return 0;
-    else:
-        doc = nlp(text)
 
-        clauses = []
-        current_clause = []
+    else:
+        '''
+        # original idea - keeping just in case
+        doc = nlp(text)
         conjunctions = {'and', 'but', 'so', 'because', 'if', 'or', 'yet', 'nor', 'while', 
                         'although', 'though', 'since', 'unless', 'whereas', 'whether'}
+        clauses = []
+        current_clause = []
+        
         for token in doc:
-            if token.dep_ == "cc" and token.head.dep_ == "conj":
-                clauses.append(current_clause)
-                current_clause = []
-            # If the token is a punctuation that ends a clause or a coordinating conjunction
             if token.text in ['.', ';', ',', ':', '?', '!'] or (token.pos_ == 'CCONJ') or (token.text.lower() in conjunctions):
                 if current_clause:
                     clauses.append(current_clause)
@@ -127,13 +157,42 @@ def num_clauses(text):
             else:
                 current_clause.append(token.text)
 
-        # Add the last clause to the list if it's not empty
         if current_clause:
             clauses.append(current_clause)
+        '''
+    
+    doc = nlp(text)
 
-        #print(f"Clauses: {clauses}")
-        return clauses
+    # calls function
+    root_token = find_root_of_sentence(doc)
 
+    # use preceding function to find the remaining
+    other_verbs = find_other_verbs(doc, root_token)
+
+    # put together all the verbs in one array
+    token_spans = []   
+    all_verbs = [root_token] + other_verbs
+    for other_verb in all_verbs:
+        (first_token_index, last_token_index) = \
+        get_clause_token_span_for_verb(other_verb, 
+                                        doc, all_verbs)
+        token_spans.append((first_token_index, 
+                            last_token_index))
+        
+    sentence_clauses = []
+    for token_span in token_spans:
+        start = token_span[0]
+        end = token_span[1]
+        if (start < end):
+            clause = doc[start:end]
+            sentence_clauses.append(clause)
+    sentence_clauses = sorted(sentence_clauses, 
+                            key=lambda tup: tup[0])
+
+    clauses_text = [clause.text for clause in sentence_clauses]
+    print(f"clauses_text: {clauses_text}")
+
+    return len(clauses_text)
 
 # REQUIREMENT 8 - Verb errors
 @app.route("/verbErr", methods=["POST"])

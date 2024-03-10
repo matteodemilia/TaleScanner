@@ -71,12 +71,16 @@ class TestAnalysis(unittest.TestCase):
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
-        text = "He went to the store and bought some groceries"
+        text = "Because I got surgery, I missed school"
         expected_result = 2
         result = num_clauses(text)
         self.assertEqual(result, expected_result)
 
-        # where the code fails
+        text = "He went to the store, and bought some groceries"
+        expected_result = 2
+        result = num_clauses(text)
+        self.assertEqual(result, expected_result)
+
         text = "He bought apples, oranges, and bananas."
         expected_result = 1
         result = num_clauses(text)
