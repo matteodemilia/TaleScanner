@@ -178,6 +178,53 @@ body {
 
 }
 
+/* ACCORDIAN */
+
+/* titles of each dropdown [details] */ 
+.results-display-analysis label {
+  display: flex;
+  font-size: 10px;
+  cursor: pointer;
+  font-weight: 380;
+
+}
+
+/* before being interacted with */ 
+label::before{
+  content: '+';
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* the interaction of the dropdown input */ 
+input[type="radio"]{
+  display: none;
+}
+
+.details-accordian {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+/* DETAILS text content */ 
+.details-accordian .details-content{
+  color: green;
+  padding: 0px 10px;
+  line-height: 26px;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.details-accordian input[type="radio"]:checked + label + .details-content{
+  max-height: 400px;
+  padding: 10px 10px 10px;
+}
+
+.details-accordian input[type="radio"]:checked + label::before{
+  content: '-';
+}
+
 /* container that holds all of the results display UNDER INPUT TEXT DISPLAY */
 .container-analysis {
   background-color: var(--baby-blue);
