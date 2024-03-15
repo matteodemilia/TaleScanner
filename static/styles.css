@@ -72,8 +72,8 @@ body {
   margin-right: 40px;
 }
 
-/* What would you like to check for? */ 
-.prompt { 
+/* What would you like to check for? */
+.prompt {
   font-weight: bold;
   font-size: 20px;
 }
@@ -97,6 +97,7 @@ body {
 .check-box {
   align-items: center;
 }
+
 /* Submit button for main choices */
 .submitButton {
   display: flex;
@@ -104,11 +105,13 @@ body {
 
 /* CSS for the button */
 #submitButton {
-  padding: 10px 20px;
+  padding: 20px 40px;
   background-color: #3498db;
   color: #fff;
   border: none;
+  font-size: medium;
   border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -180,7 +183,7 @@ body {
 
 /* ACCORDIAN */
 
-/* titles of each dropdown [details] */ 
+/* titles of each dropdown [details] */
 .results-display-analysis label {
   display: flex;
   font-size: 10px;
@@ -189,16 +192,16 @@ body {
 
 }
 
-/* before being interacted with */ 
-label::before{
+/* before being interacted with */
+label::before {
   content: '+';
   margin-right: 10px;
   font-size: 12px;
   font-weight: 500;
 }
 
-/* the interaction of the dropdown input */ 
-input[type="radio"]{
+/* the interaction of the dropdown input */
+input[type="radio"] {
   display: none;
 }
 
@@ -207,8 +210,8 @@ input[type="radio"]{
   margin-bottom: 15px;
 }
 
-/* DETAILS text content */ 
-.details-accordian .details-content{
+/* DETAILS text content */
+.details-accordian .details-content {
   color: green;
   padding: 0px 10px;
   line-height: 26px;
@@ -216,12 +219,12 @@ input[type="radio"]{
   overflow: hidden;
 }
 
-.details-accordian input[type="radio"]:checked + label + .details-content{
+.details-accordian input[type="radio"]:checked+label+.details-content {
   max-height: 400px;
   padding: 10px 10px 10px;
 }
 
-.details-accordian input[type="radio"]:checked + label::before{
+.details-accordian input[type="radio"]:checked+label::before {
   content: '-';
 }
 
