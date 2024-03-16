@@ -14,10 +14,13 @@
     <!-- [ HEAD BAR ] -->
     <header class = "headbar">
         <div id ="homepageButton">
-
             <img src="/static/images/logo-small.png" alt="Logo-small" class="logo-small" > 
         </div>
-        <p class = "title-banner">Tale Scanner</p>
+
+        <div class = "title-banner">
+            <img src="/static/images/title-text.png" alt="title-text" class="title-text-image">
+        </div>
+
         <button class="about-btn" id = "about-btn">About</button>
     </header>
 
@@ -35,11 +38,12 @@
     </script> 
 
 
-    <h3> RESULTS</h3>
+   <!--  <h3> RESULTS</h3>
 
-    <p class="textInfo">Text:</p> <br> <br> <br>
+    <p class="textInfo">Text:</p> <br> <br> <br> -->
+
     <!-- [ MAIN BODY ] *below head bar*-->
-    <div class="container">
+    <div class="container-results">
           
          
           <p class="textInput">{{ text }}</p>
@@ -47,96 +51,96 @@
         <footer class = "footer"> 
             <img src="/static/images/logo-banner.png" alt="logo" width="15%" class = "logo-banner">
         </footer>
- -->
+    -->
     </div> <!-- End of MAIN BODY -->
 
-    <!-- start of analysis container-->
-    <div class="container-analysis">
-  
-        <div class="results-display-output">
-            <p class="results-title"> <strong> Results: </strong> </p>
+        <!-- start of analysis container-->
+        <div class="container-analysis">
+    
+            <div class="results-display-output">
+                <p class="results-title"> <strong> Results: </strong> </p>
 
-            <p><strong>Total Words:</strong> {{ totalwords }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "totalWords-details-input">
-                <label for = "totalWords-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Total Words:</strong> {{ totalwords }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "totalWords-details-input">
+                    <label for = "totalWords-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <p><strong>Different Words:</strong> {{ differentwords }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "differentWords-details-input">
-                <label for = "differentWords-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Different Words:</strong> {{ differentwords }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "differentWords-details-input">
+                    <label for = "differentWords-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <p><strong>Type Token:</strong> {{ typetoken }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "typeToken-details-input">
-                <label for = "typeToken-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Type Token:</strong> {{ typetoken }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "typeToken-details-input">
+                    <label for = "typeToken-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <p><strong>Morphemes:</strong> {{ morphemes }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "morphemes-details-input">
-                <label for = "morphemes-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Morphemes:</strong> {{ morphemes }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "morphemes-details-input">
+                    <label for = "morphemes-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "verbErrors-details-input">
-                <label for = "verbErrors-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "verbErrors-details-input">
+                    <label for = "verbErrors-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
-            <div class = "details-accordian">
-                <input type = "radio" name = "accordian" id = "totalClauses-details-input">
-                <label for = "totalClauses-details-input"> details </label>
-                <div class = "details-content">
-                    <p>
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                    </p>
+                <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
+                <div class = "details-accordian">
+                    <input type = "radio" name = "accordian" id = "totalClauses-details-input">
+                    <label for = "totalClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
                 </div>
+
             </div>
 
         </div>
-
-    </div>
-    <!-- end of analysis container-->
+        <!-- end of analysis container-->
     </body>
 </html>

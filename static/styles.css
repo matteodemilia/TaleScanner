@@ -17,6 +17,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .logo-small {
@@ -32,8 +34,8 @@ header {
   cursor: pointer;
 }
 
-.title-banner {
-  font-size: 38px;
+.title-text-image {
+  width: 350px;
 }
 
 .about-btn {
@@ -45,6 +47,7 @@ header {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .about-btn:hover {
@@ -67,9 +70,11 @@ body {
   display: flex;
   padding: 20px;
   align-items: center;
+  border-radius: 6px;
   justify-content: center;
   margin-left: 40px;
   margin-right: 40px;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Apply a shadow */
 }
 
 /* What would you like to check for? */
@@ -84,6 +89,7 @@ body {
   height: 300px;
   flex: 1;
   padding: 10px;
+  border-radius: 4px;
   /*resize: none;*/
 }
 
@@ -105,7 +111,8 @@ body {
 
 /* CSS for the button */
 #submitButton {
-  padding: 20px 40px;
+  display: flex;
+  padding: 15px 30px;
   background-color: #3498db;
   color: #fff;
   border: none;
@@ -114,6 +121,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #submitButton:hover {
@@ -235,5 +243,20 @@ input[type="radio"] {
   padding: 20px;
   margin-left: 40px;
   margin-right: 40px;
-
+  
 }
+
+.container-results{
+  background-color: var(--baby-blue);
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  justify-content: center;
+  margin-left: 40px;
+  margin-right: 40px;
+  
+}
+
+
