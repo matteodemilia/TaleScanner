@@ -74,7 +74,8 @@ body {
   justify-content: center;
   margin-left: 40px;
   margin-right: 40px;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Apply a shadow */
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+  /* Apply a shadow */
 }
 
 /* What would you like to check for? */
@@ -175,6 +176,9 @@ body {
 
 .about-inner-box li {
   display: block;
+  font-family: "Hepta Slab", serif;
+  font-size: 20px;
+  font-weight: 300;
 }
 
 /* [ RESULTS PAGE ]  */
@@ -212,7 +216,7 @@ label::before {
 /* the interaction of the dropdown input */
 input[type="radio"] {
   display: none;
-} 
+}
 
 .details-accordian {
   margin-top: 5px;
@@ -244,10 +248,10 @@ input[type="radio"] {
   padding: 20px;
   margin-left: 40px;
   margin-right: 40px;
-  
+
 }
 
-.container-results{
+.container-results {
   background-color: var(--baby-blue);
   display: flex;
   padding: 20px;
@@ -257,7 +261,5 @@ input[type="radio"] {
   justify-content: center;
   margin-left: 40px;
   margin-right: 40px;
-  
+
 }
-
-

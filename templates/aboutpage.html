@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@1..900&display=swap" rel="stylesheet">
     <title>aboutpage</title>
 </head>
 
@@ -15,7 +18,10 @@
             <div id = "homepageButton">
                 <img src="/static/images/logo-small.png" alt="Logo-small" class="logo-small"> 
             </div>
-            <p class = "title-banner">Tale Scanner</p>
+<!--<p class = "title-banner">Tale Scanner</p>--> 
+<div class = "title-banner">
+    <img src="/static/images/title-text.png" alt="title-text" class="title-text-image">
+</div>
             <button class="about-btn" id="about-btn">About</button>
         </header>
     
@@ -43,15 +49,35 @@
                 <ul class = "about-inner-box"> 
 
                     <li>
-                        <h1> Tale Scanner Overview </h1>
+                        <h1 style="text-align:center; font-family:Verdana, Geneva, Tahoma, sans-serif; font-weight: 400; "> About us ! </h1>
 
-                        <p class = "about-text"> about overview</p>
+                        <p class = "about-text" style="text-align:center;font-size: 35px;"> Tale Scanner Overview </p>
+                        <h4>What is Tale Scanner used for?</h4>
+                            <p>Tale scanner is developed to help Speech and language pathologists analyze test results in a fast and efficient way.</p>
+                        <h4>How is it made?</h4>
+                            <p>We utilize spaCy which is a natural language processing python library.
+                                <br> What spaCy analyzes is the type-token ratio, morphemes, number of words, unique words, and clauses. 
+                                <br>We also utilize a library called “Gramformer”. Gramformer is used to detect verb errors in the user input.</p>
+                        <h4>Our goal</h4>
+                            <p>Our main goal is to help Speech and language pathologists by limiting time spent analyzing test results.
+                                <br>A lot of their time is taken counting the specific statistics in each test</p>
+                        <h4>Acknowledgements of anomalies</h4>
+                            <p>Tale scanner can only analyze English at the moment.
+                                <br> We hope to expand the range of different types of languages users can analyze in the future.
+                            <br>Please note that some check boxes take longer to analyze compared to others.</p>
                     </li>
 
                     <li>
-                        <h1> How to Use Tale Scanner </h1>
+                        
 
-                        <p class = "about-text"> about how to use </p>
+                        <h1 class = "about-text" > How do I use Tale Scanner? </h1>
+                        <h4>Input page</h4>
+                            <p>Simply copy and paste text in the input box. 
+                                <br>Next check which boxes you would like to analyze for!</p>
+                        <h4>Results page</h4>
+                            <p>At the moment our results only count the amount that the user checks in the input page. 
+                                <br>It analyzes each sentence one by one.
+                            <br> click the "+" to see more details about the chosen analysis</p>
                     </li>
 
                     <li>
