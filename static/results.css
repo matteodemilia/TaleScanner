@@ -1,0 +1,207 @@
+/* STYLING Variables */
+:root {
+    --mint: #57CBAB;
+    --baby-blue: #91cdff;
+    --navy-blue: #004e8d;
+    --white-blue: #dcefff;
+  }
+  
+  * {
+    font-family: sans-serif;
+  }
+  
+  /* ---- [ HEADBAR ] ---- */
+  header {
+    background-color: var(--white-blue);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  
+  .logo-small {
+    width: 80px;
+    /* Set width of logo */
+    height: auto;
+    /* Maintain aspect ratio */
+  }
+  
+  /* hover for icon not currently changing */
+  .logo-small:hover {
+    width: 85 px;
+    cursor: pointer;
+  }
+  
+  .title-text-image {
+    width: 350px;
+  }
+  
+  .about-btn {
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    background-color: var(--baby-blue);
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .about-btn:hover {
+    background-color: var(--navy-blue);
+    color: white;
+  }
+  
+  /* ---- [ WEBPAGE BODY ] ---- */
+  
+  /* white-blue section starting just below logo + about  */
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white-blue);
+  }
+  
+  /* baby-blue section */
+  .container {
+    background-color: var(--baby-blue);
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    border-radius: 6px;
+    justify-content: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Apply a shadow */
+  }
+  
+  .check-box {
+    align-items: center;
+  }
+  
+  /* Submit button for main choices */
+  .submitButton {
+    display: flex;
+  }
+  
+  /* CSS for the loading spinner */
+  .button-loader {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button-loader:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 4px solid #fff;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-sizing: border-box;
+    transform-origin: 50% 50%;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .footer {
+    text-align: center;
+  }
+  
+
+  /* [ RESULTS PAGE ]  */
+  .textInfo {
+    text-align: center;
+    top: 50px;
+  
+    position: relative;
+  }
+  
+  .textInput {
+    text-align: center;
+  
+  }
+  
+  /* ACCORDIAN */
+  
+  /* titles of each dropdown [details] */
+  .results-display-analysis label {
+    display: flex;
+    font-size: 10px;
+    cursor: pointer;
+    font-weight: 380;
+  
+  }
+  
+  /* before being interacted with */
+  label::before {
+    content: '+';
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  /* the interaction of the dropdown input */
+  input[type="checkbox"] {
+    display: none;
+  } 
+  
+  .details-accordian {
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  /* DETAILS text content */
+  .details-accordian .details-content {
+    color: green;
+    padding: 0px 10px;
+    line-height: 26px;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .details-accordian input[type="checkbox"]:checked+label+.details-content {
+    max-height: 400px;
+    padding: 10px 10px 10px;
+  }
+  
+  .details-accordian input[type="checkbox"]:checked+label::before {
+    content: '-';
+  }
+  
+  /* container that holds all of the results display UNDER INPUT TEXT DISPLAY */
+  .container-analysis {
+    background-color: var(--baby-blue);
+    display: flex;
+    padding: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    
+  }
+  
+  .container-results{
+    background-color: var(--baby-blue);
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    justify-content: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    
+  }

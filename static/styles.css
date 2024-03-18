@@ -90,6 +90,7 @@ body {
   flex: 1;
   padding: 10px;
   border-radius: 4px;
+  margin-top: 10px;
   /*resize: none;*/
 }
 
@@ -211,7 +212,7 @@ label::before {
 /* the interaction of the dropdown input */
 input[type="radio"] {
   display: none;
-}
+} 
 
 .details-accordian {
   margin-top: 5px;
