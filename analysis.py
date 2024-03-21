@@ -23,17 +23,17 @@ path = "./data"
 
 app.config['FLASK_DEBUG'] = 0
 
-# Homepage when app runs
+# define flask Homepage when app runs
 @app.route("/")
 def index():
     return render_template("homepage.html")
 
-# results page
+# define flask results page
 @app.route("/resultspage.html")
 def results():
     return render_template("resultspage.html")
 
-# about page
+# define flask about page
 @app.route("/aboutpage")
 def about():
     return render_template("aboutpage.html")
@@ -44,8 +44,10 @@ def analyze_text():
     text = request.form["text"]
     selected_analysis = request.form.getlist("analysis")
 
+    # declare results list to hold chosen results 
     results = {}
 
+    # Check if HTML element id is chosen and sent to results list above, call functions 
     if "totalWords" in selected_analysis:
         results["totalWords"] = total_words(text)
     if "differentWords" in selected_analysis:
