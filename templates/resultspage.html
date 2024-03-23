@@ -66,9 +66,17 @@
                     <label for = "totalWords-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Word count is the most foundational process in natural language processing.
+                            First, the input text must be segmented: we do this by parsing all of the text
+                            into individual word tokens. Some examples from your text:
+                            <br>
+                            First token: __
+                            <br>
+                            Final token: __
+                            <br>
+                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords }}
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
                         </p>
                     </div>
                 </div>
@@ -79,9 +87,11 @@
                     <label for = "differentWords-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Unique word count changes can easily identify patterns of an increasing, or
+                            decreasing vocabulary. Similarly to total word count, the total uniqe word
+                            count is determined through tokenization and list counting.
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
                         </p>
                     </div>
                 </div>
@@ -92,9 +102,12 @@
                     <label for = "typeToken-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Type token ratio is determined by dividing the unique word count, by the
+                            total word count. Thus, both the total word count and unique word count
+                            functions are utilized. Based on your text:<br>
+                            {{ differentwords }}/{{ totalwords }} = {{ typetoken }}
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
                         </p>
                     </div>
                 </div>
@@ -105,9 +118,13 @@
                     <label for = "morphemes-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            To identify morphemes, one must break words down into smaller segments or
+                            syllables, to identify meaning in the segments. To accomplish such a task
+                            systematically, the text is tokenized and categorized based on tense, 
+                            plurality, roots, special cases, and more. Because of this, error cases
+                            in morpheme count is common, and should be used as a relative growth tool.
+                            <br><br>
+                            Confdence rating: HIGH (75% to 90%)
                         </p>
                     </div>
                 </div>
