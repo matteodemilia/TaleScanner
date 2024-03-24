@@ -269,24 +269,17 @@ def morph(text):
         tense = token.morph.get("Tense")
         plur = token.morph.get("Number")
         print(token, tense, plur)
-        if plur == ["Plur"]:
-            counter = counter + 1
-        if tense == ["Past"]:
-            counter = counter + 1
+        if (token.is_punct == True):
+            print("should not be counted")
+            pass
+        else:
+            if plur == ["Plur"]:
+                counter = counter + 1
+            if tense == ["Past"]:
+                counter = counter + 1
         counter = counter + 1
+        print(counter)
     return counter
-
-    ### when using morphemes library
-    ### the complexity is too high and makes very slow
-    # m=Morphemes(path)
-    # c = 0
-    # test = text.split()
-    # for i in test:
-    #    c = c+ (m.count(i))
-    #    print(c)
-    #   print(m.parse(i))
-    #
-    # return (c)
 
 
 if __name__ == "__main__":
