@@ -277,7 +277,7 @@ def morph(text):
                 counter = counter + 1
             if tense == ["Past"]:
                 counter = counter + 1
-        counter = counter + 1
+            counter = counter + 1
         print(counter)
     return counter
 
