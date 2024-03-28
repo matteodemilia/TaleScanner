@@ -109,10 +109,16 @@ def find_root_of_sentence(doc):
     for token in doc:
         if token.dep_ == "ROOT":
             return token
+        
+    return None
 
 # find the other verbs in the sentence
 def find_other_verbs(doc, root_token):
     other_verbs = []
+
+    if root_token is None:
+        return other_verbs
+    
     for token in doc:
         if token.pos_ == "VERB" and token != root_token:
             ancestors = list(token.ancestors)
@@ -122,25 +128,35 @@ def find_other_verbs(doc, root_token):
 
 # find the token spans for each verb
 def get_clause_token_span_for_verb(verb, doc, all_verbs):
-    first_token_index = verb.i
-    last_token_index = verb.i
-
-    for token in doc:
-        if token in all_verbs:
-            continue
-
-        if token in list(verb.children):
-            if token.i < first_token_index:
-                first_token_index = token.i
-            if token.i > last_token_index:
-                last_token_index = token.i
-
-        elif token.pos_ in ["CCONJ", "PUNCT"]:
-            if token.i < verb.i:
-                first_token_index = token.i + 1
-            else:
+# Check if this is the only root token (main verb)
+    if len(all_verbs) == 1:
+        for token in doc:
+            if token.pos_ in ["PUNCT"]:
                 last_token_index = token.i
                 break
+            last_token_index = token.i
+        return (first_token_index, last_token_index + 1)
+
+    else:
+        first_token_index = doc[0].i  # Initialize with the first token's index
+        last_token_index = doc[-1].i
+
+        for token in doc:
+            if token in all_verbs:
+                continue
+
+            if token in list(verb.children):
+                if token.i < first_token_index:
+                    first_token_index = token.i
+                if token.i > last_token_index:
+                    last_token_index = token.i
+
+            elif token.pos_ in ["CCONJ", "PUNCT"]:
+                if token.i < verb.i:
+                    first_token_index = token.i + 1
+                else:
+                    last_token_index = token.i
+                    break
 
     return (first_token_index, last_token_index + 1)
 
@@ -188,7 +204,7 @@ def num_clauses(text):
         token_spans = []   
         all_verbs = [root_token] + other_verbs
         for other_verb in all_verbs:
-            (first_token_index, last_token_index) = \
+            (first_token_index, last_token_index) = 
             get_clause_token_span_for_verb(other_verb, 
                                             doc, all_verbs)
             token_spans.append((first_token_index, 
@@ -211,29 +227,31 @@ def num_clauses(text):
 
         return len(clauses_text)
         '''
+        doc = nlp(text)
         all_clauses = []
-        sentences = [sent.text for sent in nlp(text).sents]
 
-        for sentence in sentences:
-            doc = nlp(sentence)
-            root_token = find_root_of_sentence(doc)
-            other_verbs = find_other_verbs(doc, root_token)
+        for s in doc.sents:
+            root_token = find_root_of_sentence(s)
+            if root_token is None:
+                continue
+
+            other_verbs = find_other_verbs(s, root_token)
             all_verbs = [root_token] + other_verbs
 
             token_spans = []
             for verb in all_verbs:
-                token_span = get_clause_token_span_for_verb(verb, doc, all_verbs)
+                token_span = get_clause_token_span_for_verb(verb, s, all_verbs)
                 token_spans.append(token_span)
 
             sentence_clauses = []
-            for token_span in token_spans:
-                start, end = token_span
-                clause = doc[start:end].text
+            for start, end in token_spans:
+                clause = s[start:end].text
                 sentence_clauses.append(clause)
 
             all_clauses.extend(sentence_clauses)
+   
 
-    #print(f"num clauses: {len(all_clauses)}")
+    print(f"clauses: {all_clauses}")
     return len(all_clauses)
 
 # REQUIREMENT 8 - Verb errors
