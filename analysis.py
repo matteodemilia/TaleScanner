@@ -104,7 +104,12 @@ def type_token_ratio(text):
     doc = nlp(text)
     totalCount = total_words(text)
     uniqueCount = different_words(text)
-    return round((uniqueCount / totalCount), 2)
+
+    if totalCount == 0:
+        return 0
+
+    type_token_ratio = round((uniqueCount / totalCount), 2)
+    return type_token_ratio
 
 # finds the root token of a sentence, usually the main verb
 # in instances there is a dependent clause, it is the verb of the independent clause
