@@ -204,7 +204,7 @@ def num_clauses(text):
             all_clauses.extend(sentence_clauses)
    
 
-    print(f"clauses: {all_clauses}")
+    # print(f"clauses: {all_clauses}")
     return len(all_clauses)
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
@@ -241,7 +241,7 @@ def suborindate_clauses(text):
             current_clause = []
             in_subordinate_clause = False       
 
-    print(f"subordinate clauses: {subordinate_clauses_list}")
+    # print(f"subordinate clauses: {subordinate_clauses_list}")
     return subordinate_clauses
 
 
