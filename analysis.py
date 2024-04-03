@@ -49,11 +49,16 @@ def analyze_text():
 
     # Check if HTML element id is chosen and sent to results list above, call functions 
     if "totalWords" in selected_analysis:
-        results["totalWords"] = total_words(text)
+        words, first, last = total_words(text)
+        results["totalWords"] = {"total": words, "firstword": first, "lastword": last}
     if "differentWords" in selected_analysis:
-        results["differentWords"] = different_words(text)
+        different_words_count, different_words_list = different_words(text)
+        results["differentWords"] = {"count": different_words_count, "list": different_words_list}
     if "typeToken" in selected_analysis:
-        results["typeToken"] = type_token_ratio(text)
+        ttr, unique, total = type_token_ratio(text)
+        results["typeToken"] = {"typetokenratio": ttr, "differentwords": unique, "totalwords": total}
+    if "subordinateClauses" in selected_analysis:
+        results["subordinateClauses"] = suborindate_clauses(text)
     if "totalClauses" in selected_analysis:
         results["totalClauses"] = num_clauses(text)
     if "morpheme" in selected_analysis:
@@ -69,6 +74,7 @@ def analyze_text():
         totalwords=results.get("totalWords"),
         differentwords=results.get("differentWords"),
         typetoken=results.get("typeToken"),
+        totalsubordinate=results.get("subordinateClauses"),
         totalclauses=results.get("totalClauses"),
         morphemes=results.get("morpheme"),
         verberrors=results.get("verbErr"),
@@ -81,7 +87,11 @@ def total_words(text):
     doc = nlp(text)
     words = [token.text for token in doc if token.is_alpha]
     num_words = len(words)
-    return num_words
+
+    first = words[0]
+    last = words[-1]
+
+    return num_words, first, last
 
 
 # REQUIREMENT 2 - Number of different words
@@ -92,16 +102,27 @@ def different_words(text):
         token.text.lower() for token in doc if token.is_alpha
     ]  # not case sensitive
     num_words = len(set(words))  # put in set, only unique elements
-    return num_words
+    return num_words, words
 
 
 # REQUIREMENT 3 - unique words / total number of words
 @app.route("/unique_words", methods=["POST"])
 def type_token_ratio(text):
     doc = nlp(text)
-    totalCount = total_words(text)
-    uniqueCount = different_words(text)
-    return round((uniqueCount / totalCount), 2)
+
+    words = [token.text for token in doc if token.is_alpha]
+    totalCount = len(words)
+
+    words = [
+        token.text.lower() for token in doc if token.is_alpha
+    ] 
+    uniqueCount = len(set(words))
+
+    if totalCount == 0:
+        return 0, 0, 0
+ 
+    type_token_ratio = round((uniqueCount / totalCount), 2)
+    return type_token_ratio, uniqueCount, totalCount
 
 # finds the root token of a sentence, usually the main verb
 # in instances there is a dependent clause, it is the verb of the independent clause
@@ -121,15 +142,20 @@ def find_other_verbs(doc, root_token):
     
     for token in doc:
         if token.pos_ == "VERB" and token != root_token:
-            ancestors = list(token.ancestors)
-            if len(ancestors) == 1 and ancestors[0] == root_token:
+            if token.dep_ in ["acl", "advcl", "relcl", "ccomp", "xcomp"]:
                 other_verbs.append(token)
+            else:
+                ancestors = list(token.ancestors)
+                if len(ancestors) == 1 and ancestors[0] == root_token:
+                    other_verbs.append(token)
     return other_verbs
 
 # find the token spans for each verb
 def get_clause_token_span_for_verb(verb, doc, all_verbs):
-# Check if this is the only root token (main verb)
+    # Check if this is the only root token (main verb)
     if len(all_verbs) == 1:
+        first_token_index = doc[0].i  # Initialize with the first token's index
+        last_token_index = doc[-1].i
         for token in doc:
             if token.pos_ in ["PUNCT"]:
                 last_token_index = token.i
@@ -138,8 +164,8 @@ def get_clause_token_span_for_verb(verb, doc, all_verbs):
         return (first_token_index, last_token_index + 1)
 
     else:
-        first_token_index = doc[0].i  # Initialize with the first token's index
-        last_token_index = doc[-1].i
+        first_token_index = verb.i
+        last_token_index = verb.i
 
         for token in doc:
             if token in all_verbs:
@@ -151,14 +177,13 @@ def get_clause_token_span_for_verb(verb, doc, all_verbs):
                 if token.i > last_token_index:
                     last_token_index = token.i
 
-            elif token.pos_ in ["CCONJ", "PUNCT"]:
+            elif token.dep_ in ["mark", "advcl", "relcl", "ccomp"]:
                 if token.i < verb.i:
-                    first_token_index = token.i + 1
+                    first_token_index = token.i
                 else:
                     last_token_index = token.i
-                    break
 
-    return (first_token_index, last_token_index + 1)
+        return (first_token_index, last_token_index + 1)
 
 # REQUIREMENT 5 - Number of clauses
 @app.route("/num_clauses", methods=["POST"])
@@ -168,65 +193,6 @@ def num_clauses(text):
         return 0;
 
     else:
-        '''
-        # original idea - keeping just in case
-        doc = nlp(text)
-        conjunctions = {'and', 'but', 'so', 'because', 'if', 'or', 'yet', 'nor', 'while', 
-                        'although', 'though', 'since', 'unless', 'whereas', 'whether'}
-        clauses = []
-        current_clause = []
-        
-        for token in doc:
-            if token.text in ['.', ';', ',', ':', '?', '!'] or (token.pos_ == 'CCONJ') or (token.text.lower() in conjunctions):
-                if current_clause:
-                    clauses.append(current_clause)
-                    current_clause = []
-            else:
-                current_clause.append(token.text)
-
-        if current_clause:
-            clauses.append(current_clause)
-        '''
-
-        '''
-        # taken from https://subscription.packtpub.com/book/data/9781838987312/2/ch02lvl1sec13/splitting-sentences-into-clauses
-        doc = nlp(text)
-
-        # calls function 
-        root_token = find_root_of_sentence(doc)
-        print(f"root_token: {root_token}")
-
-        # use preceding function to find the remaining
-        other_verbs = find_other_verbs(doc, root_token)
-        print(f"other verbs: {other_verbs}")
-
-        # put together all the verbs in one array
-        token_spans = []   
-        all_verbs = [root_token] + other_verbs
-        for other_verb in all_verbs:
-            (first_token_index, last_token_index) = 
-            get_clause_token_span_for_verb(other_verb, 
-                                            doc, all_verbs)
-            token_spans.append((first_token_index, 
-                                last_token_index))
-            
-        print(f"token_spans: {token_spans}")
-            
-        sentence_clauses = []
-        for token_span in token_spans:
-            start = token_span[0]
-            end = token_span[1]
-            if (start < end):
-                clause = doc[start:end]
-                sentence_clauses.append(clause)
-        sentence_clauses = sorted(sentence_clauses, 
-                                key=lambda tup: tup[0])
-
-        clauses_text = [clause.text for clause in sentence_clauses]
-        print(f"clauses_text: {clauses_text}")
-
-        return len(clauses_text)
-        '''
         doc = nlp(text)
         all_clauses = []
 
@@ -250,9 +216,45 @@ def num_clauses(text):
 
             all_clauses.extend(sentence_clauses)
    
-
     print(f"clauses: {all_clauses}")
     return len(all_clauses)
+
+# REQUIREMENT 6 - Number of subordinate/dependent clauses
+def suborindate_clauses(text):
+    doc = nlp(text)
+    prep = ["despite", "because"] # words thats not working..
+    
+    subordinate_clauses = 0
+    current_clause = []
+    subordinate_clauses_list = []
+    in_subordinate_clause = False
+
+    for sent in doc.sents:
+        for token in sent:
+            #print(token.dep_)
+            if token.text.lower() in prep: 
+                in_subordinate_clause = True
+                subordinate_clauses += 1
+                current_clause = [token.text]
+            elif token.dep_ == "mark":  # because, that, if
+                in_subordinate_clause = True
+                subordinate_clauses += 1
+                current_clause = [token.text]
+            elif token.dep_ in ["relcl", "advcl", "ccomp"]:  # relative clause, adverbial clause, clausal complement
+                in_subordinate_clause = True
+            elif token.dep_ == "ROOT" and in_subordinate_clause:
+                in_subordinate_clause = False
+                subordinate_clauses_list.append(" ".join(current_clause))  # Append the current clause to the list
+                current_clause = []  # Reset the current clause
+
+        # Check if there is a remaining subordinate clause at the end of the sentence
+        if in_subordinate_clause:
+            subordinate_clauses_list.append(" ".join(current_clause))
+            current_clause = []
+            in_subordinate_clause = False       
+
+    print(f"subordinate clauses: {subordinate_clauses_list}")
+    return subordinate_clauses
 
 # REQUIREMENT 8 - Verb errors
 @app.route("/verbErr", methods=["POST"])
