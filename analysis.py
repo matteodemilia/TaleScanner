@@ -61,6 +61,9 @@ def analyze_text():
         results["subordinateClauses"] = suborindate_clauses(text)
     if "totalClauses" in selected_analysis:
         results["totalClauses"] = num_clauses(text)
+    if "syntacticSubordination" in selected_analysis:
+        ssindex, sub, numclauses = syntactic_subordination_index(text)
+        results["syntacticSubordination"] = {"index": ssindex, "subordinateClauses": sub, "totalClauses": numclauses}
     if "morpheme" in selected_analysis:
         results["morpheme"] = morph(text)
     if "verbErr" in selected_analysis:
@@ -76,6 +79,7 @@ def analyze_text():
         typetoken=results.get("typeToken"),
         totalsubordinate=results.get("subordinateClauses"),
         totalclauses=results.get("totalClauses"),
+        syntacticsubordination=results.get("syntacticSubordination"),
         morphemes=results.get("morpheme"),
         verberrors=results.get("verbErr"),
     )
@@ -98,9 +102,9 @@ def total_words(text):
 @app.route("/different_words", methods=["POST"])
 def different_words(text):
     doc = nlp(text)
-    words = [
+    words = set([
         token.text.lower() for token in doc if token.is_alpha
-    ]  # not case sensitive
+    ])  # not case sensitive
     num_words = len(set(words))  # put in set, only unique elements
     return num_words, words
 
@@ -220,6 +224,7 @@ def num_clauses(text):
     return len(all_clauses)
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
+@app.route("/subordinate_clauses", methods=["POST"])
 def suborindate_clauses(text):
     doc = nlp(text)
     prep = ["despite", "because"] # words thats not working..
@@ -255,6 +260,15 @@ def suborindate_clauses(text):
 
     print(f"subordinate clauses: {subordinate_clauses_list}")
     return subordinate_clauses
+
+# REQUIREMENT 7 - Syntactic Subordination Index ( Subordinate clauses/total clauses )
+@app.route("/syntactic_subordination_index", methods=["POST"])
+def syntactic_subordination_index(text):
+    total_subordinate = suborindate_clauses(text)
+    total_clauses = num_clauses(text)
+    index = round((total_subordinate/total_clauses),2)
+
+    return index, total_subordinate, total_clauses
 
 # REQUIREMENT 8 - Verb errors
 @app.route("/verbErr", methods=["POST"])
