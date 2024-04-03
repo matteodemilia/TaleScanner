@@ -60,7 +60,7 @@
             <div class="results-display-output">
                 <p class="results-title"> <strong> Results: </strong> </p>
 
-                <p><strong>Total Words:</strong> {{ totalwords }}</p>
+                <p><strong>Total Words:</strong> {{ totalwords.total }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "totalWords-details-input">
                     <label for = "totalWords-details-input"> details </label>
@@ -70,18 +70,18 @@
                             First, the input text must be segmented: we do this by parsing all of the text
                             into individual word tokens. Some examples from your text:
                             <br>
-                            First token: __
+                            First token: {{ totalwords.firstword}}
                             <br>
-                            Final token: __
+                            Final token: {{ totalwords.lastword }}
                             <br>
-                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords }}
+                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords.total }}
                             <br><br>
                             Confidence rating: VERY HIGH (>99%)
                         </p>
                     </div>
                 </div>
 
-                <p><strong>Different Words:</strong> {{ differentwords }}</p>
+                <p><strong>Different Words:</strong> {{ differentwords.count }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "differentWords-details-input">
                     <label for = "differentWords-details-input"> details </label>
@@ -92,11 +92,13 @@
                             count is determined through tokenization and list counting.
                             <br><br>
                             Confidence rating: VERY HIGH (>99%)
+                            <br><br>
+                            Unique words: {{ differentwords.list | join(' ') }}
                         </p>
                     </div>
                 </div>
 
-                <p><strong>Type Token:</strong> {{ typetoken }}</p>
+                <p><strong>Type Token:</strong> {{ typetoken.typetokenratio }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "typeToken-details-input">
                     <label for = "typeToken-details-input"> details </label>
@@ -105,7 +107,7 @@
                             Type token ratio is determined by dividing the unique word count, by the
                             total word count. Thus, both the total word count and unique word count
                             functions are utilized. Based on your text:<br>
-                            {{ differentwords }}/{{ totalwords }} = {{ typetoken }}
+                            {{ typetoken.differentwords }}/{{ typetoken.totalwords }} = {{ typetoken.typetokenratio }}
                             <br><br>
                             Confidence rating: VERY HIGH (>99%)
                         </p>

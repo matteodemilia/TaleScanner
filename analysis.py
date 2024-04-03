@@ -49,11 +49,14 @@ def analyze_text():
 
     # Check if HTML element id is chosen and sent to results list above, call functions 
     if "totalWords" in selected_analysis:
-        results["totalWords"] = total_words(text)
+        words, first, last = total_words(text)
+        results["totalWords"] = {"total": words, "firstword": first, "lastword": last}
     if "differentWords" in selected_analysis:
-        results["differentWords"] = different_words(text)
+        different_words_count, different_words_list = different_words(text)
+        results["differentWords"] = {"count": different_words_count, "list": different_words_list}
     if "typeToken" in selected_analysis:
-        results["typeToken"] = type_token_ratio(text)
+        ttr, unique, total = type_token_ratio(text)
+        results["typeToken"] = {"typetokenratio": ttr, "differentwords": unique, "totalwords": total}
     if "subordinateClauses" in selected_analysis:
         results["subordinateClauses"] = suborindate_clauses(text)
     if "totalClauses" in selected_analysis:
@@ -84,7 +87,11 @@ def total_words(text):
     doc = nlp(text)
     words = [token.text for token in doc if token.is_alpha]
     num_words = len(words)
-    return num_words
+
+    first = words[0]
+    last = words[-1]
+
+    return num_words, first, last
 
 
 # REQUIREMENT 2 - Number of different words
@@ -95,21 +102,27 @@ def different_words(text):
         token.text.lower() for token in doc if token.is_alpha
     ]  # not case sensitive
     num_words = len(set(words))  # put in set, only unique elements
-    return num_words
+    return num_words, words
 
 
 # REQUIREMENT 3 - unique words / total number of words
 @app.route("/unique_words", methods=["POST"])
 def type_token_ratio(text):
     doc = nlp(text)
-    totalCount = total_words(text)
-    uniqueCount = different_words(text)
+
+    words = [token.text for token in doc if token.is_alpha]
+    totalCount = len(words)
+
+    words = [
+        token.text.lower() for token in doc if token.is_alpha
+    ] 
+    uniqueCount = len(set(words))
 
     if totalCount == 0:
-        return 0
-
+        return 0, 0, 0
+ 
     type_token_ratio = round((uniqueCount / totalCount), 2)
-    return type_token_ratio
+    return type_token_ratio, uniqueCount, totalCount
 
 # finds the root token of a sentence, usually the main verb
 # in instances there is a dependent clause, it is the verb of the independent clause
