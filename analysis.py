@@ -203,14 +203,13 @@ def num_clauses(text):
 
             all_clauses.extend(sentence_clauses)
    
-
-    # print(f"clauses: {all_clauses}")
+    print(f"clauses: {all_clauses}")
     return len(all_clauses)
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
-@app.route("/num_clauses", methods=["POST"])
 def suborindate_clauses(text):
     doc = nlp(text)
+    prep = ["despite", "because"] # words thats not working..
     
     subordinate_clauses = 0
     current_clause = []
@@ -220,30 +219,29 @@ def suborindate_clauses(text):
     for sent in doc.sents:
         for token in sent:
             #print(token.dep_)
-            if token.dep_ == "mark":  # because, that, if
+            if token.text.lower() in prep: 
                 in_subordinate_clause = True
                 subordinate_clauses += 1
                 current_clause = [token.text]
-            elif token.dep_ == "relcl":  # relative clause
+            elif token.dep_ == "mark":  # because, that, if
                 in_subordinate_clause = True
-            elif token.dep_ == "advcl":  # adverbial clause
-                in_subordinate_clause = True
-            elif token.dep_ == "ccomp":  # clausal complement
+                subordinate_clauses += 1
+                current_clause = [token.text]
+            elif token.dep_ in ["relcl", "advcl", "ccomp"]:  # relative clause, adverbial clause, clausal complement
                 in_subordinate_clause = True
             elif token.dep_ == "ROOT" and in_subordinate_clause:
                 in_subordinate_clause = False
                 subordinate_clauses_list.append(" ".join(current_clause))  # Append the current clause to the list
                 current_clause = []  # Reset the current clause
 
-         # Check if there is a remaining subordinate clause at the end of the sentence
+        # Check if there is a remaining subordinate clause at the end of the sentence
         if in_subordinate_clause:
             subordinate_clauses_list.append(" ".join(current_clause))
             current_clause = []
             in_subordinate_clause = False       
 
-    # print(f"subordinate clauses: {subordinate_clauses_list}")
+    print(f"subordinate clauses: {subordinate_clauses_list}")
     return subordinate_clauses
-
 
 # REQUIREMENT 8 - Verb errors
 @app.route("/verbErr", methods=["POST"])
