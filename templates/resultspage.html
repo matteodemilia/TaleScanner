@@ -170,6 +170,22 @@
                     </div>
                 </div>
 
+                <p><strong>Syntactic Subordination Index:</strong> {{ syntacticsubordination.index }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "syntacticSubordination-details-input">
+                    <label for = "syntacticSubordination-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Syntactic subordination index is determined by dividing the subordinate clauses, by the
+                            total number of clauses. Thus, both the subordinate clauses count and number of clauses count
+                            functions are utilized. Based on your text:<br>
+                            {{ syntacticsubordination.subordinateClauses }}/{{ syntacticsubordination.totalClauses }} = {{ syntacticsubordination.index }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
