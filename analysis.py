@@ -1,24 +1,22 @@
 import spacy
-
-# from morphemes import Morphemes
-from flask import Flask, request, render_template
+from flask import Flask, request, session, render_template
 from gramformer import Gramformer
 import torch
-
+import os
+# from morphemes import Morphemes
 
 def set_seed(seed):
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
 
-
 set_seed(1212)  # used for gramformer
 
 gf = Gramformer(models=1, use_gpu=False)  # 1=corrector, 2 = detector(WIP)
 
-
 nlp = spacy.load("en_core_web_trf")
 app = Flask(__name__, static_folder="static")
+app.secret_key = os.urandom(24) # to generate a session ID
 path = "./data"
 
 app.config['FLASK_DEBUG'] = 0
@@ -26,7 +24,8 @@ app.config['FLASK_DEBUG'] = 0
 # define flask Homepage when app runs
 @app.route("/")
 def index():
-    return render_template("homepage.html")
+    selected_analysis = session.get("selected_analysis", [])
+    return render_template("homepage.html", selected_analysis=selected_analysis)
 
 # define flask results page
 @app.route("/resultspage.html")
@@ -43,6 +42,7 @@ def about():
 def analyze_text():
     text = request.form["text"]
     selected_analysis = request.form.getlist("analysis")
+    session["selected_analysis"] = selected_analysis
 
     # declare results list to hold chosen results 
     results = {}
@@ -73,6 +73,7 @@ def analyze_text():
         "resultspage.html",
         results=results,
         text=text,
+        selected_analysis=selected_analysis,
         # storing results into new variables so i can style each analysis on results page here
         totalwords=results.get("totalWords"),
         differentwords=results.get("differentWords"),

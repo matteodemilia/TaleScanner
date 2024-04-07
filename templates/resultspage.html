@@ -28,7 +28,7 @@
     <script type="text/javascript">
         document.getElementById("homepageButton").onclick = function () {
         
-            location.href = "/";
+            location.href = "{{ url_for('index') }}";
         };
         
         document.getElementById("about-btn").onclick = function() {
