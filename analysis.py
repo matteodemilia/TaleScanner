@@ -89,6 +89,9 @@ def analyze_text():
 # REQUIREMENT 1 - Total number of words
 @app.route("/total_words", methods=["POST"])
 def total_words(text):
+    if (len(text) == 0):
+        return 0,0,0
+    
     doc = nlp(text)
     words = [token.text for token in doc if token.is_alpha]
     num_words = len(words)
@@ -267,6 +270,10 @@ def suborindate_clauses(text):
 def syntactic_subordination_index(text):
     total_subordinate = suborindate_clauses(text)
     total_clauses = num_clauses(text)
+
+    if total_clauses == 0:
+        return 0, 0, 0
+    
     index = round((total_subordinate/total_clauses),2)
 
     return index, total_subordinate, total_clauses
