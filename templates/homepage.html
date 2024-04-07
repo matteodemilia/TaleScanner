@@ -45,44 +45,44 @@
         <div class = "choice-box">
             <div class="prompt">What would you like to check for?</div>
 
-            <form method="POST" action="/analyze_text">
+            <form method="POST" action="{{ url_for('analyze_text') }}">
                 <div class="analysisChoice">
 
                     <div class="check-box">
-                        <input type="checkbox" id="totalWords" value="totalWords" name="analysis" > Total number of words
+                        <input type="checkbox" id="totalWords" value="totalWords" name="analysis" {% if 'totalWords' in selected_analysis %}checked{% endif %}> Total number of words
                     </div>
 
                     <div class="check-box">
 
 
-                        <input type="checkbox" id="differentWords" value="differentWords" name="analysis" > Number of different words
+                        <input type="checkbox" id="differentWords" value="differentWords" name="analysis" {% if 'differentWords' in selected_analysis %}checked{% endif %} > Number of different words
                     </div>
 
                     <div class="check-box">
  
 
-                        <input type="checkbox" id="typeToken" value="typeToken" name="analysis" > Type token ratio
+                        <input type="checkbox" id="typeToken" value="typeToken" name="analysis" {% if 'typeToken' in selected_analysis %}checked{% endif %}> Type token ratio
                     </div>
 
                     <div class="check-box">
 
                     <div class="check-box">
-                        <input type="checkbox" id="subordinateClauses" value="subordinateClauses" name="analysis" > Subordinate clauses
+                        <input type="checkbox" id="subordinateClauses" value="subordinateClauses" name="analysis" {% if 'subordinateClauses' in selected_analysis %}checked{% endif %}> Subordinate clauses
                     </div>
 
-                        <input type="checkbox" id="totalClauses" value="totalClauses" name="analysis"> Total number of clauses
+                        <input type="checkbox" id="totalClauses" value="totalClauses" name="analysis" {% if 'totalClauses' in selected_analysis %}checked{% endif %}> Total number of clauses
                     </div>
                     
                     <div>
-                        <input type="checkbox" id="syntacticSubordination" value="syntacticSubordination" name="analysis"> Syntactic subordination index
+                        <input type="checkbox" id="syntacticSubordination" value="syntacticSubordination" name="analysis" {% if 'syntacticSubordination' in selected_analysis %}checked{% endif %}> Syntactic subordination index
                     </div>
 
                     <div class="check-box">
-                        <input type="checkbox" id="verbErr" value="verbErr" name="analysis" > Verb errors
+                        <input type="checkbox" id="verbErr" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
                     </div>
 
                     <div class="check-box">
-                        <input type="checkbox" id="morpheme" value="morpheme" name="analysis" > Morphemes
+                        <input type="checkbox" id="morpheme" value="morpheme" name="analysis" {% if 'morpheme' in selected_analysis %}checked{% endif %} > Morphemes
                     </div>
 
                 </div>
