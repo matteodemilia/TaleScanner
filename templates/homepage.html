@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="icon" href="/static/images/logo-small.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <title>homepage</title>
 
 </head>
@@ -69,7 +72,7 @@
                     <div class="check-box">
                         <input type="checkbox" id="subordinateClauses" value="subordinateClauses" name="analysis" {% if 'subordinateClauses' in selected_analysis %}checked{% endif %}> Subordinate clauses
                     </div>
-
+                    <div class="check-box">
                         <input type="checkbox" id="totalClauses" value="totalClauses" name="analysis" {% if 'totalClauses' in selected_analysis %}checked{% endif %}> Total number of clauses
                     </div>
                     
@@ -78,13 +81,16 @@
                     </div>
 
                     <div class="check-box">
-                        <input type="checkbox" id="verbErr" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
+                        <input type="checkbox" id="verbErr" title="This takes a while to analyze" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
                     </div>
 
                     <div class="check-box">
                         <input type="checkbox" id="morpheme" value="morpheme" name="analysis" {% if 'morpheme' in selected_analysis %}checked{% endif %} > Morphemes
                     </div>
+                    <div>
+                        <button type="button" onclick="selectAll()">Select All</button>
 
+                    </div>
                 </div>
 
 
@@ -93,13 +99,7 @@
                   <button id = "submitButton" onclick="showSpinner()">Submit</button>   
                   
                   <!-- Script for going to results page (currently overruled by python flask call) -->
-                 <script type="text/javascript">
-                    
-                    // Previous, pre-loading bar
-                    //document.getElementById("submitButton").onclick = function () {
-
-                    //    location.href = "/resultspage";
-                    //}; 
+                  <script type="text/javascript">
 
                     function showSpinner() {
                         //console.log("showSpinner() function called");
@@ -111,7 +111,16 @@
                         //console.log("Redirecting to results page");
                         location.href = "/resultspage";
                     }
-                </script> 
+                    function selectAll() {
+                        var checkboxes = document.querySelectorAll('.check-box input[type="checkbox"]');
+                        checkboxes.forEach(function(checkbox) {
+                        checkbox.checked = true;
+                    });
+                    }
+                    $(function(){
+                        $("#verbErr").tooltip();
+                    });
+                </script>
 
             </form>
 
