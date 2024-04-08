@@ -46,6 +46,8 @@ def analyze_text():
 
     # declare results list to hold chosen results 
     results = {}
+    verb_errors = 0
+    clauses = 0
 
     # Check if HTML element id is chosen and sent to results list above, call functions 
     if "totalWords" in selected_analysis:
@@ -60,6 +62,7 @@ def analyze_text():
     if "subordinateClauses" in selected_analysis:
         results["subordinateClauses"] = suborindate_clauses(text)
     if "totalClauses" in selected_analysis:
+        clauses =  num_clauses(text)
         results["totalClauses"] = num_clauses(text)
     if "syntacticSubordination" in selected_analysis:
         ssindex, sub, numclauses = syntactic_subordination_index(text)
@@ -67,7 +70,11 @@ def analyze_text():
     if "morpheme" in selected_analysis:
         results["morpheme"] = morph(text)
     if "verbErr" in selected_analysis:
-        results["verbErr"] = verbEs(text)
+        verb_errors =  verbEs(text)
+        results["verbErr"] = verb_errors
+    if "verbClauses" in selected_analysis:
+        ans, ve, cl = verb_clauses(verb_errors, clauses) # passing verb+clauses to avoid redundancy
+        results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
 
     return render_template(
         "resultspage.html",
@@ -83,12 +90,16 @@ def analyze_text():
         syntacticsubordination=results.get("syntacticSubordination"),
         morphemes=results.get("morpheme"),
         verberrors=results.get("verbErr"),
+        verbclauses=results.get("verbClauses")
     )
 
 
 # REQUIREMENT 1 - Total number of words
 @app.route("/total_words", methods=["POST"])
 def total_words(text):
+    if (len(text) == 0):
+        return 0,0,0
+    
     doc = nlp(text)
     words = [token.text for token in doc if token.is_alpha]
     num_words = len(words)
@@ -139,12 +150,9 @@ def find_root_of_sentence(doc):
     return None
 
 # find the other verbs in the sentence
+
 def find_other_verbs(doc, root_token):
     other_verbs = []
-
-    if root_token is None:
-        return other_verbs
-    
     for token in doc:
         if token.pos_ == "VERB" and token != root_token:
             if token.dep_ in ["acl", "advcl", "relcl", "ccomp", "xcomp"]:
@@ -157,69 +165,62 @@ def find_other_verbs(doc, root_token):
 
 # find the token spans for each verb
 def get_clause_token_span_for_verb(verb, doc, all_verbs):
-    # Check if this is the only root token (main verb)
-    if len(all_verbs) == 1:
-        first_token_index = doc[0].i  # Initialize with the first token's index
-        last_token_index = doc[-1].i
-        for token in doc:
-            if token.pos_ in ["PUNCT"]:
+    first_token_index = verb.i
+    last_token_index = verb.i
+
+    for token in doc:
+        if token in all_verbs:
+            continue
+        if token in list(verb.children):
+            if token.i < first_token_index:
+                first_token_index = token.i
+            if token.i > last_token_index:
                 last_token_index = token.i
-                break
-            last_token_index = token.i
-        return (first_token_index, last_token_index + 1)
+        elif token.dep_ in ["mark", "advcl", "relcl", "ccomp"]:
+            if token.i < verb.i:
+                first_token_index = token.i
+            else:
+                last_token_index = token.i
 
-    else:
-        first_token_index = verb.i
-        last_token_index = verb.i
-
-        for token in doc:
-            if token in all_verbs:
-                continue
-
-            if token in list(verb.children):
-                if token.i < first_token_index:
-                    first_token_index = token.i
-                if token.i > last_token_index:
-                    last_token_index = token.i
-
-            elif token.dep_ in ["mark", "advcl", "relcl", "ccomp"]:
-                if token.i < verb.i:
-                    first_token_index = token.i
-                else:
-                    last_token_index = token.i
-
-        return (first_token_index, last_token_index + 1)
+    return (first_token_index, last_token_index + 1)
 
 # REQUIREMENT 5 - Number of clauses
 @app.route("/num_clauses", methods=["POST"])
 def num_clauses(text):
-    # empty string
-    if(text == " "):
-        return 0;
+    if not text.strip():
+        return 0
 
-    else:
-        doc = nlp(text)
-        all_clauses = []
+    doc = nlp(text)
+    all_clauses = []
 
-        for s in doc.sents:
-            root_token = find_root_of_sentence(s)
-            if root_token is None:
-                continue
+    for sent in doc.sents:
+        root_token = find_root_of_sentence(sent)
+        if root_token is None:
+            continue
 
-            other_verbs = find_other_verbs(s, root_token)
-            all_verbs = [root_token] + other_verbs
+        other_verbs = find_other_verbs(sent, root_token)
+        all_verbs = [root_token] + other_verbs
 
-            token_spans = []
-            for verb in all_verbs:
-                token_span = get_clause_token_span_for_verb(verb, s, all_verbs)
-                token_spans.append(token_span)
+        clause_token_spans = []
+        for verb in all_verbs:
+            clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
+            clause_token_spans.append(clause_token_span)
 
-            sentence_clauses = []
-            for start, end in token_spans:
-                clause = s[start:end].text
-                sentence_clauses.append(clause)
+        for start, end in clause_token_spans:
+            clause = sent[start:end].text.strip()
+            all_clauses.append(clause)
 
-            all_clauses.extend(sentence_clauses)
+    # Combine clauses connected by conjunctions
+    combined_clauses = []
+    conj = ["while", "since", "whenever", "because", "although", "as"]
+    current_clause = all_clauses[0]
+    for i in range(1, len(all_clauses)): # if i in conj
+        if i in conj:
+            combined_clauses.append(current_clause)
+            current_clause = all_clauses[i]
+        else:
+            current_clause += " " + all_clauses[i]
+    combined_clauses.append(current_clause)
    
     print(f"clauses: {all_clauses}")
     return len(all_clauses)
@@ -267,6 +268,10 @@ def suborindate_clauses(text):
 def syntactic_subordination_index(text):
     total_subordinate = suborindate_clauses(text)
     total_clauses = num_clauses(text)
+
+    if total_clauses == 0:
+        return 0, 0, 0
+    
     index = round((total_subordinate/total_clauses),2)
 
     return index, total_subordinate, total_clauses
@@ -294,7 +299,17 @@ def verbEs(texts):
         # print("-" * 100)
     return counter
 
+# REQUIREMENT 9 - Verb errors divided by the number of clauses
+@app.route("/verbClauses", methods=["POST"])
+def verb_clauses(verbs, clauses):
+    if clauses == 0:
+        return 0, 0, 0
 
+    ratio = round((verbs/clauses),2)
+
+    return ratio, verbs, clauses
+
+    
 # REQUIREMENT 4 - Morphemes
 @app.route("/morpheme", methods=["POST"])
 def morph(text):

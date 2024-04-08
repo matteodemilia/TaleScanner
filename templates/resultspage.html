@@ -131,19 +131,6 @@
                     </div>
                 </div>
 
-                <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
-                <div class = "details-accordian">
-                    <input type = "checkbox" name = "accordian" id = "verbErrors-details-input">
-                    <label for = "verbErrors-details-input"> details </label>
-                    <div class = "details-content">
-                        <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                        </p>
-                    </div>
-                </div>
-
                 <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "totalClauses-details-input">
@@ -180,6 +167,33 @@
                             total number of clauses. Thus, both the subordinate clauses count and number of clauses count
                             functions are utilized. Based on your text:<br>
                             {{ syntacticsubordination.subordinateClauses }}/{{ syntacticsubordination.totalClauses }} = {{ syntacticsubordination.index }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "verbErrors-details-input">
+                    <label for = "verbErrors-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Verb Errors / Number of Clauses:</strong> {{ verbclauses.verbClauses }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "verbClauses-details-input">
+                    <label for = "verbClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Based on your text:<br>
+                            {{ verbclauses.verbErrors }}/{{ verbclauses.totalClauses }} = {{ verbclauses.verbClauses }}
                             <br><br>
                             Confidence rating: x
                         </p>

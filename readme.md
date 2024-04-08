@@ -1,10 +1,17 @@
 # Tale Scanner
-By Christopher Mead Matteo DeMilia Tiera Smith Kyrstn Hall 
+By Christopher Mead, Matteo DeMilia, Tiera Smith, Kyrstn Hall 
 
 Tale Scanner is a web application that can analyze text consisting 200-600 words. Built using `HTML/CSS/JS`, `Python Flask`, and Python libraries `spaCy` and `Gramformer`
 
 ## Current Features
-to be added!
+1. Total number of words
+2. Number of unique words
+3. Type token ratio (unique words/number of words)
+4. Morphemes
+5. Total clauses
+6. Syntactic subordination index
+7. Verb errors
+8. Verb errors divided by number of clauses
 
 ## Installation 
 
