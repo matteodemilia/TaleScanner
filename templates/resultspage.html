@@ -186,6 +186,20 @@
                     </div>
                 </div>
 
+                <p><strong>Verb Errors / Number of Clauses:</strong> {{ verbclauses.verbClauses }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "verbClauses-details-input">
+                    <label for = "verbClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Based on your text:<br>
+                            {{ verbclauses.verbErrors }}/{{ verbclauses.totalClauses }} = {{ verbclauses.verbClauses }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
