@@ -44,57 +44,72 @@
     <!-- [ MAIN BODY ] *below head bar*-->
     <div class="container">
 
-
+        <!-- CHOICE BOX includes: analysis check-boxes, input text box, and javascript for page-->
         <div class = "choice-box">
             <div class="prompt">What would you like to check for?</div>
 
             <form method="POST" action="{{ url_for('analyze_text') }}">
                 <div class="analysisChoice">
 
+                    <!-- Checkbox #1: TOTAL WORDS -->
                     <div class="check-box">
                         <input type="checkbox" id="totalWords" value="totalWords" name="analysis" {% if 'totalWords' in selected_analysis %}checked{% endif %}> Total number of words
                     </div>
 
+                    <!-- Checkbox #2: TOTAL UNIQUE WORDS -->
                     <div class="check-box">
                         <input type="checkbox" id="differentWords" value="differentWords" name="analysis" {% if 'differentWords' in selected_analysis %}checked{% endif %} > Number of different words
                     </div>
 
+                    <!-- Checkbox #3: TYPE TOKEN RATIO -->
                     <div class="check-box">
                         <input type="checkbox" id="typeToken" value="typeToken" name="analysis" {% if 'typeToken' in selected_analysis %}checked{% endif %}> Type token ratio
                     </div>
 
+                    <!-- Checkbox #4: TOTAL MORPHEMES -->
                     <div class="check-box">
                         <input type="checkbox" id="morpheme" value="morpheme" name="analysis" {% if 'morpheme' in selected_analysis %}checked{% endif %} > Morphemes
                     </div>
 
-                    <div class="check-box">
-
+                    <!-- Checkbox #5: TOTAL CLAUSES -->
                     <div class="check-box">
                         <input type="checkbox" id="totalClauses" value="totalClauses" name="analysis" {% if 'totalClauses' in selected_analysis %}checked{% endif %}> Total number of clauses
                     </div>
 
+                    <!-- Checkbox #6: SUBOORDINATE CLAUSES -->
                     <div class="check-box">
                         <input type="checkbox" id="subordinateClauses" value="subordinateClauses" name="analysis" {% if 'subordinateClauses' in selected_analysis %}checked{% endif %}> Subordinate clauses
                     </div>
                     
-                    <div>
+                    <!-- Checkbox #7: SYNTACTIC SUBOORDINATION INDEX -->
+                    <div class ="check-box">
                         <input type="checkbox" id="syntacticSubordination" value="syntacticSubordination" name="analysis" {% if 'syntacticSubordination' in selected_analysis %}checked{% endif %}> Syntactic subordination index
                     </div>
 
+                    <!-- Checkbox #8: VERB ERRORS -->
                     <div class="check-box">
                         <input type="checkbox" id="verbErr" title="This takes a while to analyze" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
                     </div>
 
+                    <!-- Checkbox #9: VERBS / CLAUSES  -->
                     <div class="check-box">
                         <input type="checkbox" id="verbClauses"  value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb divided by the number of clauses
                     </div>
 
+                    <!-- Checkbox #10: SELECT ALL -->
+                    <div class = "check-box">
                         <button type="button" onclick="selectAll()">Select All</button>
+                    </div>
+
+                    <!-- Checkbox #11: DESELECT ALL -->
+                    <div class = "check-box">
+                        <button type="button" onclick="deselectAll()">Deselect All</button>
                     </div>
                     
                 </div>
 
 
+                <!-- Input TEXT AREA -->
                   <textarea class="input-box" name="text" placeholder="Please type or copy and paste text here" ></textarea>
 
                   <button id = "submitButton" onclick="showSpinner()">Submit</button>   
@@ -112,12 +127,24 @@
                         //console.log("Redirecting to results page");
                         location.href = "/resultspage";
                     }
+
+                    // SELECT ALL function: allows for the selection of all choices before starting
                     function selectAll() {
                         var checkboxes = document.querySelectorAll('.check-box input[type="checkbox"]');
                         checkboxes.forEach(function(checkbox) {
                         checkbox.checked = true;
                     });
                     }
+
+                    // DESELECT ALL function: allows for the clearing of all choices 
+                    function deselectAll() {
+                        var checkboxes = document.querySelectorAll('.check-box input[type="checkbox"]');
+                        checkboxes.forEach(function(checkbox) {
+                        checkbox.checked = false;
+                    });
+                    }
+
+
                     $(function(){
                         $("#verbErr").tooltip();
                     });
