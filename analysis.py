@@ -70,10 +70,10 @@ def analyze_text():
     if "morpheme" in selected_analysis:
         results["morpheme"] = morph(text)
     if "verbErr" in selected_analysis:
-        verb_errors =  verbEs(text)
-        results["verbErr"] = verb_errors
+        error_count, verb_errors =  verbEs(text)
+        results["verbErr"] = {"count": error_count, "list": verb_errors}
     if "verbClauses" in selected_analysis:
-        ans, ve, cl = verb_clauses(verb_errors, clauses) # passing verb+clauses to avoid redundancy
+        ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
         results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
 
     return render_template(
@@ -281,23 +281,29 @@ def syntactic_subordination_index(text):
 def verbEs(texts):
     doc = nlp(texts)
     counter = 0
+    bad_sentences = []
     assert doc.has_annotation("SENT_START")
     for sent in doc.sents:
         # print(sent.text)
         sent1 = sent.text
-
+        #print(sent1)
         corrected_sentences = gf.correct(sent1, max_candidates=1)
 
-        # print("[Input] ", sent1)
         test = str(corrected_sentences)
         for corrected_sentence in corrected_sentences:
-            counter = counter + 1
             hold = gf.get_edits(sent1, corrected_sentence)
             if hold == []:
                 # print("no change")
                 counter = counter - 1
+            else:
+                for data in hold:
+                    altverb = data[1]
+                    counter = counter + 1
+            #print(altverb)
+            
+            bad_sentences.append(sent1)
         # print("-" * 100)
-    return counter
+    return counter, bad_sentences
 
 # REQUIREMENT 9 - Verb errors divided by the number of clauses
 @app.route("/verbClauses", methods=["POST"])

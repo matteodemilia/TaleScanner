@@ -173,15 +173,21 @@
                     </div>
                 </div>
 
-                <p><strong>Verb Errors:</strong> {{ verberrors }}</p>
+                <p><strong>Verb Errors:</strong> {{ verberrors.count }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "verbErrors-details-input">
                     <label for = "verbErrors-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            The found verb errors are listed below.
+                            <br><br>
+                            Confidence rating: VERY HIGH (>99%)
+                            <br><br>
+                            Sentences with verb errors: <br> 
+                            {% for error in verberrors.list %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                                <!-- {{ verberrors.list | join('') }} -->
                         </p>
                     </div>
                 </div>
