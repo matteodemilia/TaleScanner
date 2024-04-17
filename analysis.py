@@ -72,9 +72,17 @@ def analyze_text():
     if "verbErr" in selected_analysis:
         error_count, verb_errors =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors}
-    if "verbClauses" in selected_analysis:
+
+    if "verbClauses" and "verbErr" in selected_analysis:
         ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
-        results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
+        results["verbClauses"] = {"verbClauses": ans, "ver`bErrors": ve, "totalClauses": cl}
+    elif "verbClauses" in selected_analysis:
+        error_count, verb_errors =  verbEs(text) 
+        clauses =  num_clauses(text)
+        ans, ve, cl = verb_clauses(error_count, clauses) 
+        results["verbClauses"] = {"verbClauses": ans, "ver`bErrors": ve, "totalClauses": cl}
+
+
 
     return render_template(
         "resultspage.html",
