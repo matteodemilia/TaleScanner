@@ -110,11 +110,11 @@
 
 
                 <!-- Input TEXT AREA -->
-                  <textarea class="input-box" name="text" placeholder="Please type or copy and paste text here" ></textarea>
+                  <textarea class="input-box" name="text" id = "input-box" placeholder="Please type or copy and paste text here" ></textarea>
 
-                  <button id = "submitButton" onclick="showSpinner()">Submit</button>   
+                  <button id = "submitButton" onclick="showSpinner(); saveText()">Submit</button>   
                   
-                  <!-- Script for going to results page (currently overruled by python flask call) -->
+                  <!-- JAVASCRIPT for going to results page (currently overruled by python flask call) -->
                   <script type="text/javascript">
 
                     function showSpinner() {
@@ -144,6 +144,22 @@
                     });
                     }
 
+                    // LOAD PREVIOUS TEXT function: loads text previously inputted for more efficient tests
+                    window.onload = function loadText() {
+                        var savedText = localStorage.getItem('inputText');
+                        if (savedText) {
+                            document.getElementById('inputBox').value = savedText;
+                        }
+                        console.log("loading text");
+                    }
+
+                    // SAVE TEXT function: saves input text to localStorage --> called onClick() submit
+                    function saveText() {
+                        var inputText = document.getElementById('input-box').value;
+                        localStorage.setItem('inputText', inputText);
+                        console.log("saving text");
+                    }
+                    
 
                     $(function(){
                         $("#verbErr").tooltip();
