@@ -161,13 +161,14 @@
   } 
   
   .details-accordian {
+    background-color: var(--baby-blue);
     margin-top: 5px;
     margin-bottom: 15px;
   }
   
   /* DETAILS text content */
   .details-accordian .details-content {
-    color: green;
+    color: black;
     padding: 0px 10px;
     line-height: 26px;
     max-height: 0;
@@ -177,6 +178,7 @@
   .details-accordian input[type="checkbox"]:checked+label+.details-content {
     max-height: 400px;
     padding: 10px 10px 10px;
+    background-color: var(--white-blue);
   }
   
   .details-accordian input[type="checkbox"]:checked+label::before {
