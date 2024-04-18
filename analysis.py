@@ -46,7 +46,7 @@ def analyze_text():
 
     # declare results list to hold chosen results 
     results = {}
-    verb_errors = 0
+    # verb_errors = 0
     clauses = 0
 
     # Check if HTML element id is chosen and sent to results list above, call functions 
@@ -73,14 +73,14 @@ def analyze_text():
         error_count, verb_errors =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors}
 
-    if "verbClauses" and "verbErr" in selected_analysis:
-        ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
-        results["verbClauses"] = {"verbClauses": ans, "ver`bErrors": ve, "totalClauses": cl}
-    elif "verbClauses" in selected_analysis:
+    # if "verbClauses" and "verbErr" in selected_analysis:
+    #     ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
+    #     results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
+    if "verbClauses" in selected_analysis:
         error_count, verb_errors =  verbEs(text) 
         clauses =  num_clauses(text)
         ans, ve, cl = verb_clauses(error_count, clauses) 
-        results["verbClauses"] = {"verbClauses": ans, "ver`bErrors": ve, "totalClauses": cl}
+        results["verbClauses"] = {"verbClauses": ans, "verbErrors": error_count, "totalClauses": clauses}
 
 
 
