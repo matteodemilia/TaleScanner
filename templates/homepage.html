@@ -96,12 +96,17 @@
                         <input type="checkbox" id="verbClauses"  value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb divided by the number of clauses
                     </div>
 
-                    <!-- Checkbox #10: SELECT ALL -->
+                    <!-- Checkbox #10: WORDS PER CLAUSE -->
+                    <div class="check-box">
+                        <input type="checkbox" id="wordsClauses" title="This takes a while to analyze" value="wordsClauses" name="analysis" {% if 'wordsClauses' in selected_analysis %}checked{% endif %} > Words per clause
+                    </div>
+
+                    <!-- Checkbox #11: SELECT ALL -->
                     <div class = "check-box">
                         <button type="button" onclick="selectAll()">Select All</button>
                     </div>
 
-                    <!-- Checkbox #11: DESELECT ALL -->
+                    <!-- Checkbox #12: DESELECT ALL -->
                     <div class = "check-box">
                         <button type="button" onclick="deselectAll()">Deselect All</button>
                     </div>

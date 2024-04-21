@@ -206,6 +206,20 @@
                     </div>
                 </div>
 
+                <p><strong>Words per clauses:</strong> {{ wordsperclauses.wordsPerClause }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "wordsClauses-details-input">
+                    <label for = "wordsClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Based on your text:<br>
+                            {{ wordsperclauses.totalWords }}/{{ wordsperclauses.totalClauses }} = {{ wordsperclauses.wordsPerClause }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
         </div>

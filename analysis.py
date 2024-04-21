@@ -81,6 +81,9 @@ def analyze_text():
         clauses =  num_clauses(text)
         ans, ve, cl = verb_clauses(error_count, clauses) 
         results["verbClauses"] = {"verbClauses": ans, "verbErrors": error_count, "totalClauses": clauses}
+    if "wordsClauses" in selected_analysis:
+        ans, w, c = words_per_clause(text)
+        results["wordsClauses"] = {"wordsPerClause": ans, "totalWords": w, "totalClauses": c}
 
 
 
@@ -98,9 +101,9 @@ def analyze_text():
         syntacticsubordination=results.get("syntacticSubordination"),
         morphemes=results.get("morpheme"),
         verberrors=results.get("verbErr"),
-        verbclauses=results.get("verbClauses")
+        verbclauses=results.get("verbClauses"),
+        wordsperclauses=results.get("wordsClauses")
     )
-
 
 # REQUIREMENT 1 - Total number of words
 @app.route("/total_words", methods=["POST"])
@@ -312,6 +315,21 @@ def verbEs(texts):
             bad_sentences.append(sent1)
         # print("-" * 100)
     return counter, bad_sentences
+
+# Addional Requirement - Words per clause
+@app.route("/words_per_clause", methods=["POST"])
+def words_per_clause(text):
+    words, f, l = total_words(text)
+    clauses = num_clauses(text)
+
+    if clauses == 0:
+        return 0, 0, 0
+    
+    ans = round((words/clauses),2)
+
+    return ans, words, clauses
+
+
 
 # REQUIREMENT 9 - Verb errors divided by the number of clauses
 @app.route("/verbClauses", methods=["POST"])
