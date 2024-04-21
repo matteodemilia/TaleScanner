@@ -60,6 +60,7 @@
             <div class="results-display-output">
                 <p class="results-title"> <strong> Results: </strong> </p>
 
+                {% if 'totalWords' in selected_analysis %}
                 <p><strong>Total Words:</strong> {{ totalwords.total }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "totalWords-details-input">
@@ -80,7 +81,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'differentWords' in selected_analysis %}
                 <p><strong>Different Words:</strong> {{ differentwords.count }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "differentWords-details-input">
@@ -97,7 +100,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'typeToken' in selected_analysis %}
                 <p><strong>Type Token:</strong> {{ typetoken.typetokenratio }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "typeToken-details-input">
@@ -113,7 +118,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'morpheme' in selected_analysis %}
                 <p><strong>Morphemes:</strong> {{ morphemes }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "morphemes-details-input">
@@ -130,7 +137,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'totalClauses' in selected_analysis %}
                 <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "totalClauses-details-input">
@@ -143,7 +152,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'subordinateClauses' in selected_analysis %}
                 <p><strong>Subordinate Clauses:</strong> {{ totalsubordinate }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "subordinateClauses-details-input">
@@ -156,7 +167,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'syntacticSubordination' in selected_analysis %}
                 <p><strong>Syntactic Subordination Index:</strong> {{ syntacticsubordination.index }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "syntacticSubordination-details-input">
@@ -172,7 +185,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'verbErr' in selected_analysis %}
                 <p><strong>Verb Errors:</strong> {{ verberrors.count }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "verbErrors-details-input">
@@ -191,7 +206,9 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
 
+                {% if 'verbClauses' in selected_analysis %}
                 <p><strong>Verb Errors / Number of Clauses:</strong> {{ verbclauses.verbClauses }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "verbClauses-details-input">
@@ -205,6 +222,23 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
+
+                {% if 'wordsClauses' in selected_analysis %}
+                <p><strong>Words per clauses:</strong> {{ wordsperclauses.wordsPerClause }}</p>
+                <div class = "details-accordian">
+                    <input type = "checkbox" name = "accordian" id = "wordsClauses-details-input">
+                    <label for = "wordsClauses-details-input"> details </label>
+                    <div class = "details-content">
+                        <p>
+                            Based on your text:<br>
+                            {{ wordsperclauses.totalWords }}/{{ wordsperclauses.totalClauses }} = {{ wordsperclauses.wordsPerClause }}
+                            <br><br>
+                            Confidence rating: x
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
 
             </div>
 
