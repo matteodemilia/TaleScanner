@@ -305,16 +305,15 @@ def verbEs(texts):
         for corrected_sentence in corrected_sentences:
             hold = gf.get_edits(sent1, corrected_sentence)
             if hold == []:
-                # print("no change")
-                #counter = counter - 1
                 pass
             else:
                 for data in hold:
                     altverb = data[1]
                     counter = counter + 1
+                    bad_sentences.append(sent1)
             #print(altverb)
             
-            bad_sentences.append(sent1)
+
         # print("-" * 100)
     return counter, bad_sentences
 
