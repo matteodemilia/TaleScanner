@@ -41,6 +41,11 @@ pip install -U git+https://github.com/PrithivirajDamodaran/Gramformer.git
 pip install torch
 ```
 
+6. Install Morphemes - used by the Morphemes Library
+```
+pip install Morphemes
+```
+
 ## Running
 
 1. Compile and run the program
