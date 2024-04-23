@@ -121,7 +121,7 @@
                 {% endif %}
 
                 {% if 'morpheme' in selected_analysis %}
-                <p><strong>Morphemes:</strong> {{ morphemes }}</p>
+                <p><strong>Morphemes:</strong> {{ morphemes.count }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "morphemes-details-input">
                     <label for = "morphemes-details-input"> details </label>
@@ -132,6 +132,22 @@
                             systematically, the text is tokenized and categorized based on tense, 
                             plurality, roots, special cases, and more. Because of this, error cases
                             in morpheme count is common, and should be used as a relative growth tool.
+                            <br><br>       
+                            Lemmas:  
+                            {% for lemma in morphemes.list %}
+                                {{lemma}}
+                            {% endfor %}
+                            <br><br>
+                            Bound: {{morphemes.bound}}
+                            {%for bound in morphemes.bound %}
+                                {{morphemes.bound}}
+                            {% endfor %}
+                            <br><br>
+                            Free: {{morphemes.free}}
+                            <!-- {% for free in morphemes.free %}
+                                {{morphemes.free}}
+                            {% endfor %} -->
+
                             <br><br>
                             Confdence rating: HIGH (75% to 90%)
                         </p>

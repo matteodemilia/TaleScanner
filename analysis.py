@@ -3,7 +3,7 @@ from flask import Flask, request, session, render_template, url_for, flash
 from gramformer import Gramformer
 import torch
 import os
-# from morphemes import Morphemes
+from morphemes import Morphemes
 
 def set_seed(seed):
     torch.manual_seed(seed)
@@ -87,7 +87,8 @@ def analyze_text():
         ssindex, sub, numclauses = syntactic_subordination_index(text)
         results["syntacticSubordination"] = {"index": ssindex, "subordinateClauses": sub, "totalClauses": numclauses}
     if "morpheme" in selected_analysis:
-        results["morpheme"] = morph(text)
+        counter, lemma, bound, free = morph(text)
+        results["morpheme"] = {"count": counter, "list": lemma, "bound": bound, "free": free}
     if "verbErr" in selected_analysis:
         error_count, verb_errors =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors}
@@ -324,7 +325,8 @@ def verbEs(texts):
             hold = gf.get_edits(sent1, corrected_sentence)
             if hold == []:
                 # print("no change")
-                counter = counter - 1
+                #counter = counter - 1
+                pass
             else:
                 for data in hold:
                     altverb = data[1]
@@ -366,12 +368,41 @@ def verb_clauses(verbs, clauses):
 def morph(text):
     doc = nlp(text)
     counter = 0
+    m = Morphemes(path)
+    lemma = []
+    free = []
+    bound = []
     for token in doc:
+        word = str(token)
+        data = m.parse(word)
+
+        print("MORPH:   ", data)
+
+        status = data['status']
+        word = data['word']
+        morpheme_count = data['morpheme_count']
+            
+        print("Morpheme Count:", morpheme_count)
+        if status != 'NOT_FOUND':
+            tree = data['tree']
+            if 'tree' in data:
+                tree = data['tree']                
+                for item in tree:
+                    if 'children' in item:  # If it's a free morpheme
+                        free_morpheme = item['children'][0]['text']
+                        #free_type = item['type']
+                        free.append(free_morpheme)
+                    else:  # If it's a bound morpheme
+                        bound_morpheme = item['text']
+                        #bound_type = item['type']
+                        bound.append(bound_morpheme)
+            else:
+                print("'tree' key not found in data dictionary.")
+        lemma.append(token.lemma_)
         tense = token.morph.get("Tense")
         plur = token.morph.get("Number")
-        print(token, tense, plur)
+        #print(token, tense, plur)
         if (token.is_punct == True):
-            print("should not be counted")
             pass
         else:
             if plur == ["Plur"]:
@@ -379,8 +410,10 @@ def morph(text):
             if tense == ["Past"]:
                 counter = counter + 1
             counter = counter + 1
-        print(counter)
-    return counter
+        lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
+        free = list(set(free))
+        bound = list(set(bound))
+    return counter, lemma, bound, free
 
 
 if __name__ == "__main__":
