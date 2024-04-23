@@ -72,7 +72,7 @@
 
                     <!-- Checkbox #4: TOTAL MORPHEMES -->
                     <div class="check-box">
-                        <input type="checkbox" id="morpheme" value="morpheme" name="analysis" {% if 'morpheme' in selected_analysis %}checked{% endif %} > Morphemes
+                        <input type="checkbox" id="morpheme" title="warning: time = ~1.5sec per 10 words" value="morpheme" name="analysis" {% if 'morpheme' in selected_analysis %}checked{% endif %} > Morphemes
                     </div>
 
                     <!-- Checkbox #5: TOTAL CLAUSES -->
@@ -92,17 +92,17 @@
 
                     <!-- Checkbox #8: VERB ERRORS -->
                     <div class="check-box">
-                        <input type="checkbox" id="verbErr" title="This takes a while to analyze" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
+                        <input type="checkbox" id="verbErr" title="warning: time = ~1sec per 10 words" value="verbErr" name="analysis" {% if 'verbErr' in selected_analysis %}checked{% endif %} > Verb errors
                     </div>
 
                     <!-- Checkbox #9: VERBS / CLAUSES  -->
                     <div class="check-box">
-                        <input type="checkbox" id="verbClauses"  value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb divided by the number of clauses
+                        <input type="checkbox" id="verbClauses" title="warning: time = ~1sec per 10 words" value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb divided by the number of clauses
                     </div>
 
                     <!-- Checkbox #10: WORDS PER CLAUSE -->
                     <div class="check-box">
-                        <input type="checkbox" id="wordsClauses" title="This takes a while to analyze" value="wordsClauses" name="analysis" {% if 'wordsClauses' in selected_analysis %}checked{% endif %} > Words per clause
+                        <input type="checkbox" id="wordsClauses" value="wordsClauses" name="analysis" {% if 'wordsClauses' in selected_analysis %}checked{% endif %} > Words per clause
                     </div>
 
                     <!-- Checkbox #11: SELECT ALL -->
