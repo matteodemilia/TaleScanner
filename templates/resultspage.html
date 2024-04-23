@@ -60,6 +60,7 @@
             <div class="results-display-output">
                 <p class="results-title"> <strong> Results: </strong> </p>
 
+                <!-- Total Words Result Output -->
                 {% if 'totalWords' in selected_analysis %}
                 <p><strong>Total Words:</strong> {{ totalwords.total }}</p>
                 <div class = "details-accordian">
@@ -68,21 +69,27 @@
                     <div class = "details-content">
                         <p>
                             Word count is the most foundational process in natural language processing.
-                            First, the input text must be segmented: we do this by parsing all of the text
-                            into individual word tokens. Some examples from your text:
                             <br>
-                            First token: {{ totalwords.firstword}}
+                            First, the input text must be segmented, with each word isolated: we do this by parsing all of the text
+                            into individual word tokens, and determining the number of tokens identified. Tale Scanner's segmentation
+                            will end a token at some, but not all, unusual symbols (e.g. '@', '%', and '*'). To maximize accuracy, please
+                            ommit abnormal symbols from your text. For further information, refer to the 'About' page.
                             <br>
-                            Final token: {{ totalwords.lastword }}
+                            Some examples from your text:
                             <br>
-                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords.total }}
-                            <br><br>
-                            Confidence rating: VERY HIGH (>99%)
+                            First identified token: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalwords.firstword}}]</span>
+                            <br>
+                            Final identified token: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalwords.lastword }}]</span>
+                            <br>
+                            The word tokens are added to a list, and counted individually for the total: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalwords.total }}]</span>
+                            <!--<br><br>
+                            Confidence rating: VERY HIGH (>99%)-->
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Total Unique Words Result Output -->
                 {% if 'differentWords' in selected_analysis %}
                 <p><strong>Different Words:</strong> {{ differentwords.count }}</p>
                 <div class = "details-accordian">
@@ -90,36 +97,44 @@
                     <label for = "differentWords-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Unique word count changes can easily identify patterns of an increasing, or
-                            decreasing vocabulary. Similarly to total word count, the total uniqe word
+                            Changes in unique word count can identify patterns of an increasing, or
+                            decreasing vocabulary.
+                            <br>
+                            Similarly to total word count, the total uniqe word
                             count is determined through tokenization and list counting.
+                            <br>
+                            Based on your text, the unique words are:
                             <br><br>
-                            Confidence rating: VERY HIGH (>99%)
-                            <br><br>
-                            Unique words: {{ differentwords.list | join(' ') }}
+                            Unique words: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ differentwords.list | join('] [') }}]</span>
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Type Token Ratio Result Output -->
                 {% if 'typeToken' in selected_analysis %}
-                <p><strong>Type Token:</strong> {{ typetoken.typetokenratio }}</p>
+                <p><strong>Type Token Ratio:</strong> {{ typetoken.typetokenratio }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "typeToken-details-input">
                     <label for = "typeToken-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Type token ratio is determined by dividing the unique word count, by the
+                            Type token ratio(TTR) helps determine variation. A higher TTR portrays a higher level of lexical variation. 
+                            A lower TTR portrays a lower level of lexical variation.
+                            <br>
+                            TTR is determined by dividing the unique word count, by the
                             total word count. Thus, both the total word count and unique word count
-                            functions are utilized. Based on your text:<br>
-                            {{ typetoken.differentwords }}/{{ typetoken.totalwords }} = {{ typetoken.typetokenratio }}
-                            <br><br>
-                            Confidence rating: VERY HIGH (>99%)
+                            functions are utilized. 
+                            <br>
+                            Based on your text:
+                            <br>
+                            [Unique word count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ typetoken.differentwords }}</span>] / [Total word count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ typetoken.totalwords }}</span>] = [TTR: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ typetoken.typetokenratio }}</span>]
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Morphemes Result Output -->
                 {% if 'morpheme' in selected_analysis %}
                 <p><strong>Morphemes:</strong> {{ morphemes.count }}</p>
                 <div class = "details-accordian">
@@ -147,14 +162,12 @@
                             <!-- {% for free in morphemes.free %}
                                 {{morphemes.free}}
                             {% endfor %} -->
-
-                            <br><br>
-                            Confdence rating: HIGH (75% to 90%)
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Total Clauses Result Output -->
                 {% if 'totalClauses' in selected_analysis %}
                 <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
                 <div class = "details-accordian">
@@ -162,14 +175,23 @@
                     <label for = "totalClauses-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            A clause is a group of words under a sentence in hierarchy, which contains both a
+                            subject and a predicate. There are several types of clauses, and it can be difficult
+                            to determine each type simultaneously in the same process. This tool uses generalized
+                            patterns to help determine all types of clauses, but specializes in main clause identification. 
+                            <br> 
+                            Tale Scanner determines clauses by ___
+                            <br>
+                            Based on your text:
+                            <br>
+                            <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"></span>
+                            
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Suboordinate Clauses Result Output -->
                 {% if 'subordinateClauses' in selected_analysis %}
                 <p><strong>Subordinate Clauses:</strong> {{ totalsubordinate }}</p>
                 <div class = "details-accordian">
@@ -177,14 +199,22 @@
                     <label for = "subordinateClauses-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            Subordinate clauses are typically introduced with a conjuction, 
+                            and is dependent on a main clause (often called dependent clauses).
+                            The use of subordinate clauses can add fluidity and complexity to many texts. 
+                            <br>
+                            Tale Scanner determines subordinate clauses by ___
+                            <br>
+                            Based on your text:
+                            <br>
+                            <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"></span>
+
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Syntactic Subordination Result Output -->
                 {% if 'syntacticSubordination' in selected_analysis %}
                 <p><strong>Syntactic Subordination Index:</strong> {{ syntacticsubordination.index }}</p>
                 <div class = "details-accordian">
@@ -194,15 +224,18 @@
                         <p>
                             Syntactic subordination index is determined by dividing the subordinate clauses, by the
                             total number of clauses. Thus, both the subordinate clauses count and number of clauses count
-                            functions are utilized. Based on your text:<br>
-                            {{ syntacticsubordination.subordinateClauses }}/{{ syntacticsubordination.totalClauses }} = {{ syntacticsubordination.index }}
-                            <br><br>
-                            Confidence rating: x
+                            functions are utilized. 
+                            <br>
+                            Based on your text:
+                            <br>
+                            [Subordinate clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.subordinateClauses }}</span>] / [Total clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.totalClauses }}</span>] = [Syntactic subordination index: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.index }}</span>]
+                          
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Verb Errors Result Output -->
                 {% if 'verbErr' in selected_analysis %}
                 <p><strong>Verb Errors:</strong> {{ verberrors.count }}</p>
                 <div class = "details-accordian">
@@ -224,33 +257,42 @@
                 </div>
                 {% endif %}
 
+                <!-- Verb Error Ratio Result Output -->
                 {% if 'verbClauses' in selected_analysis %}
-                <p><strong>Verb Errors / Number of Clauses:</strong> {{ verbclauses.verbClauses }}</p>
+                <p><strong>Verb Error Ratio</strong> {{ verbclauses.verbClauses }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "verbClauses-details-input">
                     <label for = "verbClauses-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Based on your text:<br>
-                            {{ verbclauses.verbErrors }}/{{ verbclauses.totalClauses }} = {{ verbclauses.verbClauses }}
-                            <br><br>
-                            Confidence rating: x
+                            The verb error ratio is the total number of verb errors divided by the
+                            total number of clauses. Thus, both the verb error count and total clause count
+                            functions are utilized.
+                            <br>
+                            Based on your text:
+                            <br>
+                            [Verb error count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ verbclauses.verbErrors }}</span>] / [Total clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ verbclauses.totalClauses }}</span>] = [Verb error ratio: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ verbclauses.verbClauses }}</span>]
+                            
                         </p>
                     </div>
                 </div>
                 {% endif %}
 
+                <!-- Words Per Clause Result Output -->
                 {% if 'wordsClauses' in selected_analysis %}
-                <p><strong>Words per clauses:</strong> {{ wordsperclauses.wordsPerClause }}</p>
+                <p><strong>Words Per Clause:</strong> {{ wordsperclauses.wordsPerClause }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "wordsClauses-details-input">
                     <label for = "wordsClauses-details-input"> details </label>
                     <div class = "details-content">
                         <p>
-                            Based on your text:<br>
-                            {{ wordsperclauses.totalWords }}/{{ wordsperclauses.totalClauses }} = {{ wordsperclauses.wordsPerClause }}
-                            <br><br>
-                            Confidence rating: x
+                            Words per clause is determined as an average of the total word count per clause.
+                            Thus, both the total word count and total clauses functions are utilized.
+                            <br> 
+                            Based on your text:
+                            <br>
+                            [Total word count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ wordsperclauses.totalWords }}</span>] / [Total clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ wordsperclauses.totalClauses }}</span>] = [Words per clause: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ wordsperclauses.wordsPerClause }}</span>]
+                           
                         </p>
                     </div>
                 </div>

@@ -164,6 +164,7 @@
     background-color: var(--baby-blue);
     margin-top: 5px;
     margin-bottom: 15px;
+    padding-bottom: 10px;
   }
   
   /* DETAILS text content */
@@ -173,12 +174,15 @@
     line-height: 26px;
     max-height: 0;
     overflow: hidden;
+    
   }
   
   .details-accordian input[type="checkbox"]:checked+label+.details-content {
     max-height: 400px;
     padding: 10px 10px 10px;
     background-color: var(--white-blue);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Apply a shadow */
+    border-radius: 4px;
   }
   
   .details-accordian input[type="checkbox"]:checked+label::before {
