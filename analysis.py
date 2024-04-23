@@ -128,28 +128,75 @@ def analyze_text():
 # REQUIREMENT 1 - Total number of words
 @app.route("/total_words", methods=["POST"])
 def total_words(text):
-    if (len(text) == 0):
-        return 0,0,0
+    # commented out original idea for back up
+    # if (len(text) == 0):
+    #     return 0,0,0
     
-    doc = nlp(text)
-    words = [token.text for token in doc if token.is_alpha]
-    num_words = len(words)
+    # doc = nlp(text)
+    # words = [token.text for token in doc if token.is_alpha]
+    # num_words = len(words)
+
+    # first = words[0]
+    # last = words[-1]
+
+    # return num_words, first, last
+
+    # NEW SOLUTION:
+    # dashed words ex. "hello-hello-world" counts as 1
+    # numbers ex. "123" or "343254" is counted as a word
+    # hi&&hi counts as 1 in the mean time ["hihi"]
+
+    words = []
+    count = 0
+    current_word = ""
+
+    for char in text:
+        if char.isalnum() or (char == '-') :
+            current_word += char
+        elif char == ' ':
+            words.append(current_word)
+            count += 1
+            current_word = ""
+
+    if current_word:
+        words.append(current_word)
+        count += 1
 
     first = words[0]
-    last = words[-1]
+    last = words[-1]    
 
-    return num_words, first, last
+    return count, first, last
 
 
 # REQUIREMENT 2 - Number of different words
 @app.route("/different_words", methods=["POST"])
 def different_words(text):
-    doc = nlp(text)
-    words = set([
-        token.text.lower() for token in doc if token.is_alpha
-    ])  # not case sensitive
-    num_words = len(set(words))  # put in set, only unique elements
-    return num_words, words
+    # doc = nlp(text)
+    # words = set([
+    #     token.text.lower() for token in doc if token.is_alpha
+    # ])  # not case sensitive
+    # num_words = len(set(words))  # put in set, only unique elements
+    # return num_words, words
+
+    words = []
+    count = 0
+    current_word = ""
+
+    for char in text:
+        if char.isalnum() or (char == '-') :
+            current_word += char
+        elif char == ' ':
+            words.append(current_word)
+            count += 1
+            current_word = ""
+
+    if current_word:
+        words.append(current_word)
+        count += 1
+
+    unique_words = set(words)
+
+    return len(unique_words), unique_words
 
 
 # REQUIREMENT 3 - unique words / total number of words
