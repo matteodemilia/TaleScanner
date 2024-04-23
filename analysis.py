@@ -309,19 +309,20 @@ def num_clauses(text):
 def subordinate_clauses(text):
     doc = nlp(text)
     # words thats not working..
-    #conjunctions = ["despite", "because", "that", "who", "when", "where", "what"] 
-    conjunctions = [
-    "and", "but", "or", "nor", "for", "so", "yet",
-    "although", "in order that", "whatever",
-    "as", "provided that", "when",
-    "as if", "since", "whenever",
-    "as long as", "so that", "where",
-    "because", "whereas",
-    "before", "that", "wherever",
-    "even if", "though", "whether",
-    "even though", "unless",
-    "ever since", "until"
-    ]
+    conjunctions = ["despite", "because", "that", "who", "when", "where", "what"] 
+
+    # conjunctions = [
+    # "and", "but", "or", "nor", "for", "so", "yet",
+    # "although", "in order that", "whatever",
+    # "as", "provided that", "when",
+    # "as if", "since", "whenever",
+    # "as long as", "so that", "where",
+    # "because", "than", "whereas",
+    # "before", "that", "wherever",
+    # "even if", "though", "whether",
+    # "even though", "unless",
+    # "ever since", "until", "if"
+    #]
     
     subordinate_clauses = 0
     current_clause = []

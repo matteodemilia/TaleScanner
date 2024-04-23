@@ -202,9 +202,14 @@
                             Subordinate clauses are typically introduced with a conjuction, 
                             and is dependent on a main clause (often called dependent clauses).
                             The use of subordinate clauses can add fluidity and complexity to many texts. 
-                            <br>
-                            Tale Scanner determines subordinate clauses by ___
-                            <br>
+                            <br><br>
+                            Tale Scanner determines subordinate clauses by tokenizing the input and interates through each sentence and then the words (tokens).
+                            For each token, it checks whether it is a subordinating conjunction and also utilizes spacy's dependency tagging feature, 
+                            which checks whether the token is marked as relcl (relative clause), advcl (adverbial clause), and ccomp (casual complement). 
+                            If these are found, the token is stored in a conjunction list.
+                            <br><br>
+                            <span style="color: red">WARNING:</span> The number of subordinate clauses may not be accurate, more commonly those with conjunctions that are in the middle of the sentences
+                            <br><br>
                             Based on your text:
                             <br>
                             There are <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.numSubordinate}}]</span>subordinate clauses.
