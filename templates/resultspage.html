@@ -193,7 +193,7 @@
 
                 <!-- Suboordinate Clauses Result Output -->
                 {% if 'subordinateClauses' in selected_analysis %}
-                <p><strong>Subordinate Clauses:</strong> {{ totalsubordinate }}</p>
+                <p><strong>Subordinate Clauses:</strong> {{ totalsubordinate.numSubordinate }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "subordinateClauses-details-input">
                     <label for = "subordinateClauses-details-input"> details </label>
@@ -207,8 +207,9 @@
                             <br>
                             Based on your text:
                             <br>
-                            <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"></span>
-
+                            There are <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.numSubordinate}}]</span>subordinate clauses.
+                            <br>
+                            List of conjunctions: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.list | join('] [') }}]</span>
                         </p>
                     </div>
                 </div>

@@ -79,7 +79,8 @@ def analyze_text():
         ttr, unique, total = type_token_ratio(text)
         results["typeToken"] = {"typetokenratio": ttr, "differentwords": unique, "totalwords": total}
     if "subordinateClauses" in selected_analysis:
-        results["subordinateClauses"] = suborindate_clauses(text)
+        num, l = subordinate_clauses(text)
+        results["subordinateClauses"] = {"numSubordinate": num, "list": l}
     if "totalClauses" in selected_analysis:
         clauses =  num_clauses(text)
         results["totalClauses"] = num_clauses(text)
@@ -305,9 +306,22 @@ def num_clauses(text):
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
 @app.route("/subordinate_clauses", methods=["POST"])
-def suborindate_clauses(text):
+def subordinate_clauses(text):
     doc = nlp(text)
-    prep = ["despite", "because"] # words thats not working..
+    # words thats not working..
+    #conjunctions = ["despite", "because", "that", "who", "when", "where", "what"] 
+    conjunctions = [
+    "and", "but", "or", "nor", "for", "so", "yet",
+    "although", "in order that", "whatever",
+    "as", "provided that", "when",
+    "as if", "since", "whenever",
+    "as long as", "so that", "where",
+    "because", "whereas",
+    "before", "that", "wherever",
+    "even if", "though", "whether",
+    "even though", "unless",
+    "ever since", "until"
+    ]
     
     subordinate_clauses = 0
     current_clause = []
@@ -317,7 +331,7 @@ def suborindate_clauses(text):
     for sent in doc.sents:
         for token in sent:
             #print(token.dep_)
-            if token.text.lower() in prep: 
+            if token.text.lower() in conjunctions: 
                 in_subordinate_clause = True
                 subordinate_clauses += 1
                 current_clause = [token.text]
@@ -339,12 +353,12 @@ def suborindate_clauses(text):
             in_subordinate_clause = False       
 
     print(f"subordinate clauses: {subordinate_clauses_list}")
-    return subordinate_clauses
+    return subordinate_clauses, subordinate_clauses_list
 
 # REQUIREMENT 7 - Syntactic Subordination Index ( Subordinate clauses/total clauses )
 @app.route("/syntactic_subordination_index", methods=["POST"])
 def syntactic_subordination_index(text):
-    total_subordinate = suborindate_clauses(text)
+    total_subordinate, list = subordinate_clauses(text)
     total_clauses = num_clauses(text)
 
     if total_clauses == 0:
