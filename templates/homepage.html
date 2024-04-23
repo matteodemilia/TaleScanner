@@ -48,6 +48,10 @@
         <div class = "choice-box">
             <div class="prompt">What would you like to check for?</div>
 
+            {% if error_message %}
+                <div class="error-message" style="color: red;">{{ error_message }}</div>
+            {% endif %}
+
             <form method="POST" action="{{ url_for('analyze_text') }}">
                 <div class="analysisChoice">
 
