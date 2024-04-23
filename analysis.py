@@ -1,5 +1,5 @@
 import spacy
-from flask import Flask, request, session, render_template
+from flask import Flask, request, session, render_template, url_for, flash
 from gramformer import Gramformer
 import torch
 import os
@@ -37,12 +37,30 @@ def results():
 def about():
     return render_template("aboutpage.html")
 
+def validateResults(text, analysis):
+    if not text.strip() and not analysis:
+        error_message = "ERROR: Please enter text and check at least one checkbox."
+        return render_template("homepage.html", error_message=error_message, analysis=analysis)
+    if not text.strip():
+        error_message = "ERROR: Please enter text"
+        return render_template("homepage.html", error_message=error_message, analysis=analysis)
+    elif not analysis:
+        error_message = "ERROR: Please check at least one checkbox."
+        return render_template("homepage.html", error_message=error_message, analysis=analysis)
+    else:
+        return None
+
 # Gets input from homepage checkbox
 @app.route("/analyze_text", methods=["POST"])
 def analyze_text():
     text = request.form["text"]
     selected_analysis = request.form.getlist("analysis")
     session["selected_analysis"] = selected_analysis
+
+    result = validateResults(text, selected_analysis)
+
+    if result is not None:
+        return result
 
     # declare results list to hold chosen results 
     results = {}
