@@ -68,16 +68,19 @@
                     <div class = "details-content">
                         <p>
                             Word count is the most foundational process in natural language processing.
-                            First, the input text must be segmented: we do this by parsing all of the text
-                            into individual word tokens. Some examples from your text:
                             <br>
-                            First token: {{ totalwords.firstword}}
+                            First, the input text must be segmented, with each word isolated: we do this by parsing all of the text
+                            into individual word tokens. 
                             <br>
-                            Final token: {{ totalwords.lastword }}
+                            Some examples from your text:
                             <br>
-                            The word tokens are added to a list, and counted individually for the answer: {{ totalwords.total }}
-                            <br><br>
-                            Confidence rating: VERY HIGH (>99%)
+                            First token: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ totalwords.firstword}}</span>
+                            <br>
+                            Final token: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ totalwords.lastword }}</span>
+                            <br>
+                            The word tokens are added to a list, and counted individually for the answer: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ totalwords.total }}</span>
+                            <!--<br><br>
+                            Confidence rating: VERY HIGH (>99%)-->
                         </p>
                     </div>
                 </div>
@@ -163,7 +166,7 @@
                         <p>
                             Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
                             Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
-                            Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text --
+                            <span style="font-weight: bold; color: red; font-family: 'Courier New', Courier, monospace;">Sample Text -- Sample Text -- Sample Text -- Sample Text -- Sample Text -- </span>
                         </p>
                     </div>
                 </div>
