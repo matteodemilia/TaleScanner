@@ -37,6 +37,7 @@ def results():
 def about():
     return render_template("aboutpage.html")
 
+# checks whether 1. no text and checkbox 2. no text 3. no checkbox
 def validateResults(text, analysis):
     if not text.strip() and not analysis:
         error_message = "ERROR: Please enter text and check at least one checkbox."
@@ -59,7 +60,7 @@ def analyze_text():
 
     result = validateResults(text, selected_analysis)
 
-    if result is not None:
+    if result is not None: # there are errors , else continue as normal
         return result
 
     # declare results list to hold chosen results 
