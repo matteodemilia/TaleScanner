@@ -97,7 +97,7 @@
 
                     <!-- Checkbox #9: VERBS / CLAUSES  -->
                     <div class="check-box">
-                        <input type="checkbox" id="verbClauses" title="warning: time = ~1sec per 10 words" value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb divided by the number of clauses
+                        <input type="checkbox" id="verbClauses" title="warning: time = ~1sec per 10 words" value="verbClauses" name="analysis" {% if 'verbClauses' in selected_analysis %}checked{% endif %} > Verb error ratio
                     </div>
 
                     <!-- Checkbox #10: WORDS PER CLAUSE -->
@@ -169,7 +169,7 @@
                         console.log("saving text");
                     }
                     
-
+                    // Warning for time complexities
                     $(function(){
                         $("#verbErr").tooltip();
                         $("#morpheme").tooltip();

@@ -47,16 +47,16 @@
             <!-- OUTER About box (holds all of the about list items) -->
             <div class = "about-outer-box">
 
+                <h1 style="text-align:center; font-family:Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; "> About </h1>
+
                 <!-- INNER About box (is the unordered list itself: use [ "about-inner-box li" ] in CSS)-->
                 <ul class = "about-inner-box"> 
 
-                    <h1 style="text-align:center; font-family:Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; "> About </h1>
-
-                    <!-- OVERVIEW -->
+                    <!-- Major section: OVERVIEW -->
                     <h1> Overview </h1>
-                    <li>
+                    <li class = "about-inner-lists">
                     
-                        <h4>What is Tale Scanner?</h4>
+                        <h3>What is Tale Scanner?</h3>
                             <p>
                                 The Tale Scanner system is a natural language processor designed with the intention of 
                                 providing a consistent alternative to inaccurate generalize artifical intelligence services.
@@ -65,7 +65,7 @@
                                 anomalies, and unique error cases that have not been identified and/or handled yet. 
                             </p>
 
-                        <h4>Tale Scanner's Goal</h4>
+                        <h3>Tale Scanner's Goal</h3>
                             <p>
                                 The goal of the Tale Scanner system is to provide a consistent, reliable, and informative 
                                 tool to conduct analysis and help speech language pathologists assess linguistic capability. By providing an 
@@ -77,7 +77,7 @@
                                 further detail in both the results output, and this "About" page.  
                             </p>
 
-                        <h4>Acknowledgement of Anomalies, Paramaters, and Analysis Failures</h4>
+                        <h3>Acknowledgement of Anomalies, Paramaters, and Analysis Failures</h4>
                             <p>
                                 Tale Scanner was developed by a collegiate team of four during a set time frame. Due to the nature of 
                                 development, it is important to note that Tale Scanner is not a perfect analysis tool by any measure; and 
@@ -92,75 +92,218 @@
 
                     </li>
 
-                    <!-- USER GUIDE -->
+                    <!-- MAJOR section: USER GUIDE -->
                     <h1>How to Use Tale Scanner</h1>
-                    <li>
-                        <h4>Assumption of Practicality</h4>
+                    <li class = "about-inner-lists">
+                        <h3>Assumption of Practicality</h3>
                         <p>
-
+                            Although the Tale Scanner system is designed to handle as many special cases
+                            as possible, there exist many exceptions that will cause issue with a segment of
+                            the analysis process. Because of this, the user is expected to input bodies of text
+                            that are linguistically practical for writing standards. The more one includes impractical
+                            cases of writing, the more one should expect errors in the analysis results. 
+                            <br><br>
+                            Example of practical writing: [ <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"> As the sun set, the old man sat by the river, reminiscing about the days gone by. With a contented sigh, he closed his eyes, feeling grateful for a life well-lived.</span> ]
+                            <br><br>
+                            Example of impractical writing: [ <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"> The player named Gh0stk!d44.00 said: "Dude wth, I'm such a d****ss for paying 55.23gold..."</span> ]
+                            <br><br>
+                            Even if impractical cases are included in the text, Tale Scanner's output should be reliable from test to test. Thus, users can
+                            include special cases if the goal is to improve the same text through multiple iterations. 
                         </p>
                         
-                        <h4>The Homepage</h4>
+                        <!-- SUBMAJOR section: homepage -->
+                        <h3>The Homepage</h3>
                         <p>
-
-                        </p>
-                        <h3>User Input Choices</h3>
-                        <p>
-
-                        </p>
-                        <h3>User Input Text-Box</h3>
-                        <p>
-
-                        </p>
-                        <h3>The Headbar: Site Navigation</h3>
-                        <p>
-
+                            The Tale Scanner homepage acts as both the system's landing page and dashboard. All navigation options 
+                            are accessible from the homepage, as well as all analysis functionalities. The homepage includes analysis choice-boxes, 
+                            analysis input text-box, quality of life buttons (select all, deselect all, etc.), and a navigation headbar. 
+                            <br><br>
+                            <img src="/static/images/homepage-image.png" alt="homepage-screenshot" width="80%" class="homepage-screenshot img-border">
                         </p>
 
-                        <h4>The Results Page</h4>
+                        <h4>User Input Choices</h4>
                         <p>
-
+                            The first relevant analysis functionality on the homepage is the list of analysis choice-boxes. The user can click any combination of these choice-boxes, and receive the 
+                            correlated results in the following analysis results page. Currently, Tale Scanner can perform analysis on ten different types of linguistic analysis:
+                            <br>
+                            <ol class = "ordered-list-about">
+                                <li class = "about-list-item">Total word count of the text</li>
+                                <li class = "about-list-item">Total unique word count of the text</li>
+                                <li class = "about-list-item">Type token ratio of the text</li>
+                                <li class = "about-list-item">Total morphemes within the text</li>
+                                <li class = "about-list-item">Total number of clauses within the text</li>
+                                <li class = "about-list-item">Total number of subordinate clauses within the text</li>
+                                <li class = "about-list-item">Syntactic subordination index of the text</li>
+                                <li class = "about-list-item">Total number of verb errors within the text</li>
+                                <li class = "about-list-item">Verb error ratio of the text</li>
+                                <li class = "about-list-item">Average words per clause within the text</li>
+                            </ol>
+                            <br>
+                            Three of the analysis choices take significantly longer to analyze than the remaining seven choices.
+                            The longest analysis time is for analyzing morphemes, with an average of [1.4 seconds] per [10 words] in the text. 
+                            Verb errors and verb error ratio have essentially the same processing time, as both require use of the same algorithm: 
+                            averaging at approximately [1 second] per [10 words] in the text. The remaining seven analysis choices take [&lt;1 second] 
+                            to process any number of words (&gt;600 words has not been tested extensively for time)
+                            <br><br>
+                            By returning to the homepage via the navigation headbar (Tale Scanner logo), the user can retain all submission choices from the previous run 
+                            and utilize them instantaneously for any future run(s).
                         </p>
-                        <h3>Output Display</h3>
-                        <p>
 
+                        <h4>User Input Text-Box</h4>
+                        <p>
+                            Just under the analysis choice-boxes is the input text-box which will receive the body of text 
+                            that will be analyzed by the user and the Tale Scanner system. To submit your body of text for analysis, 
+                            simply click on the [Submit] button. Assuming analysis choces have been made and text has been inputted, Tale Scanner will receive 
+                            said choices and text, and start the analysis process. While the process is underway, the submit button will display 
+                            a rotating loading bar as an indicator the process is functioning properly. However, just because the bar displays a loading state, 
+                            does not necessarily mean Tale Scanner is processing. 
+                            <br><br>
+                            If users were to return to the input screen via the browser-window back arrow, 
+                            the submitted body of text will remain in the input box, and the loading bar may still be rotating. In this case 
+                            the submit button is <span style=" font-style: italic">still accessible</span>, and can be clicked for another submission. 
+                            Because of this, it should be a rule-of-thumb for users to attempt to use the button even if it displays the processing animation. 
+                            As long as the submission correlating to the animation has been performed, the Tale Scanner process <span style=" font-style: italic">should</span> be ready 
+                            for more inputs.
                         </p>
-                        <h3>Process Details</h3>
-                        <p>
 
+                        <h4>The Headbar: Site Navigation</h4>
+                        <p>
+                            Tale Scanner's headbar is the only completely static feature of the website. At the top of every page 
+                            is a headbar which includes: 
+                            <ol class="headbar-list">
+                                <li>
+                                    Return to homepage button (logo) [left]
+                                </li>
+
+                                <li>
+                                   Tale Scanner header/title [center]
+                                </li>
+
+                                <li>
+                                   Navigate to about page button [right]
+                                </li>
+                            </ol>
+                            <br>
+                            <img src="/static/images/headbar-image.png" alt="headbar-image" width ="80%" class = "headbar-image img-border">
+                        </p>
+
+                        <!-- SUBMAJOR section: results page -->
+                        <h3>The Results Page</h3>
+                        <p>
+                            Tale Scanner's analysis results page is displayed to the user after selecting analysis choices, and 
+                            submitting the body of text to be analyzed. Results will display in a list format, with only the selected 
+                            analysis choices displaying to the user. Within this format, the user can gain more information through "details" drop-downs. 
+                            Because the analysis functions may not be perfect, it is important as the user to reference the provided information and double-check 
+                            important results. 
+                            <br><br>
+                            All analysis results are an <span style=" font-weight: bold; font-style: italic; color: #004e8d;">estimation</span>, and should not be used as a concrete reference to 
+                            judge linguistic statistics. Tale Scanner should be used as a tool to supplement linguistic analysis and make the overall process more efficient. 
+                            <br><br>
+                            <img src ="/static/images/results-page-image.png" alt="results-page-image" width ="80%" class ="results-page-image img-border">
+                        </p>
+
+                        <h4>Output Display</h4>
+                        <p>
+                            The results page's output displays number results for each of the correlating analysis choices. Under each heading and result number is a further details 
+                            section acting as a drop-down. If the user selects one of the "details" buttons, a drop-down will appear with further information on the analysis' results, process, and common error parameters. 
+                            Dynamic information is shown in a different font and color, allowing for the user to conduct further human analysis efficiently. If an analysis choice is not selected, the correlating process, results, and details will 
+                            not display on the results page. 
+                        </p>
+
+                        <h4>Process Details</h4>
+                        <p>
+                            Each of the analysis choices has it's own algorithm for determining results. Because of this, each analysis result 
+                            is coupled with "details" that correlate to the respective process. To help the user, Tale Scanner has included foundational analysis information 
+                            within each details drop-down; highlighting how the result is found, and how to replicate it elsewhere. With this included, users can determine where 
+                            analysis parameters are broken in the submitted text, and how to gain a more accurate result from the application. 
                         </p>
 
 
                     </li>
 
-                    
-                    <li>
-                        <h1> How to Read Tale Scanner Results </h1>
+                    <h1>Understanding Tale Scanner's Analysis</h1>
+                    <li class = "about-inner-lists">
+                        
+                        <!-- SUBMAJOR section: foundational processes -->
+                        <h3>Foundational Processes</h3>
+                        <p>
+                            In natural language processing, there are many computational processes that are utilized across 
+                            a wide variety of analysis algorithms. Because Tale Scanner uses a handful of these processes in multiple 
+                            algorithms, it is important to understand the processes themselves to avoid error parameters.
+                        </p>
 
-                        <p class = "about-text"> about how to read results </p>
-                        <h4>How are results determined?</h4>
-                        <p> The results are determined by algorithms our team made with the help of "spaCy" and “Gramformer”.  
-                        </p>
-                        <h4>How is confidence rating determined?</h4>
+                        <h4>Parsing</h4>
                         <p>
-                            <br>Testing is done to ensure our system is accuratly analyzing the inputted text by the user.
-                            <br>  We first test each analysis check box by itself to verify functionaility. 
-                            <br> We then pair the check boxes with another. Lastly, we group them together to find out any potential
-                            <br>  issues with the analysis. Another important reason is to also check the runtime to warn users of which
-                            <br> ones take longer. 
+                            Parsing is the process of splitting a segment of information into smaller logical syntactic components in which meaning is directly conveyed. A body of text 
+                            can be parsed for keywords, sentences can be parsed by structure, and words can be parsed into smaller segments of meaning. Depending on the process, 
+                            Tale Scanner utilizes parsing to either prime the algorithm with data, or to finalize calculations before counting and outputting. 
+                            <br><br>
+                            The following is an example of parsing a word into smaller morphological components:
+                            <br><br>
+                            <img src = "/static/images/parse-word-image.png" alt="parse-word" width = "30%" class ="parse-word-image img-border">
                         </p>
-                        <h4>Confidence rating per results</h4>
+
+                        <h4>Segmentation and Tokenization</h4>
                         <p>
-                            Having a high confidence rating means the results have high accuracy with no mistakes. 
-                            <br>Those with lower confidence ratings mean there are some errors in the analysis. 
+                            Similarly to the parsing process, segmenting and tokenization are processes that split a segment of information into smaller components. However, 
+                            these components do not need to convey meaning in themselves, as these processes are typically used for data isolation only. Segmenting is the act 
+                            of splitting the data, and tokenization is the act of isolating the split data into tokens. In Tale Scanner, the body of text 
+                            is segmented by words, creating a list of word tokens. The segmentation process uses characters to determine the beginning and end of a token. Currently, tokens are 
+                            split by: 
+                            <ol class="segmenting-list">
+                                <li>White-spaces (' ')</li>
+                                <li>Most symbols (@, *, %, $, &, etc.)</li>
+                                <li>Some number formats (11:45, 50.45, 1/2, etc.)</li>
+                            </ol>
+                            <br>
+                            The following is an example of segmenting a sentence into smaller tokens:
+                            <br><br>
+                            <img src="/static/images/tokenization-image.png" alt="tokenization-image" width = "40%" class = "tokenization-image img-border">
                         </p>
+
+                        <h4>Tagging</h4>
+                        <p>
+
+                        </p>
+
+                        <!-- SUBMAJOR section: analysis processes -->
+                        <h3>Tale Scanner Analysis</h3>
+                        <p>
+
+                        </p>
+
+                        <h4>Word Counts and Type Token Ratio</h4>
+                        <p>
+
+                        </p>
+
+                        <h4>Morphemes</h4>
+                        <p>
+                            
+                        </p>
+
+                        <h4>Clauses and Syntactic Subordination Index</h4>
+                        <p>
+                            
+                        </p>
+
+                        <h4>Verb Errors and Verb Error Ratio</h4>
+                        <p>
+
+                        </p>
+
                     </li>
                 </ul>
 
             </div>
 
 
+
         </div>
 
+        <!-- Footer of main dashboard-->
+        <footer class = "footer"> 
+            <img src="/static/images/logo-banner.png" alt="logo" width="22%" class = "logo-banner">
+        </footer>
 </body>
 </html>
