@@ -128,12 +128,12 @@ def num_clauses(text):
             clause = sent[start:end].text.strip()
             all_clauses.append(clause)
    
-    #print(f"clauses: {all_clauses}")
+    print(f"clauses: {all_clauses}")
     return len(all_clauses)
 
 while True:
     text = input("Enter text (or type 'end' to exit): ")
     if text.lower() == 'end':
         break
-    print(subordindate_clauses(text))
-    #print(num_clauses(text))
+    #print(subordindate_clauses(text))
+    print(num_clauses(text))

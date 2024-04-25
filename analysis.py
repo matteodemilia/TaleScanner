@@ -82,8 +82,8 @@ def analyze_text():
         num, l = subordinate_clauses(text)
         results["subordinateClauses"] = {"numSubordinate": num, "list": l}
     if "totalClauses" in selected_analysis:
-        clauses =  num_clauses(text)
-        results["totalClauses"] = num_clauses(text)
+        c, l =  num_clauses(text)
+        results["totalClauses"] = {"numClauses": c, "list": l}
     if "syntacticSubordination" in selected_analysis:
         ssindex, sub, numclauses = syntactic_subordination_index(text)
         results["syntacticSubordination"] = {"index": ssindex, "subordinateClauses": sub, "totalClauses": numclauses}
@@ -93,10 +93,6 @@ def analyze_text():
     if "verbErr" in selected_analysis:
         error_count, verb_errors =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors}
-
-    # if "verbClauses" and "verbErr" in selected_analysis:
-    #     ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
-    #     results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
     if "verbClauses" in selected_analysis:
         error_count, verb_errors =  verbEs(text) 
         clauses =  num_clauses(text)
@@ -288,21 +284,9 @@ def num_clauses(text):
         for start, end in clause_token_spans:
             clause = sent[start:end].text.strip()
             all_clauses.append(clause)
-
-    # Combine clauses connected by conjunctions
-    combined_clauses = []
-    conj = ["while", "since", "whenever", "because", "although", "as"]
-    current_clause = all_clauses[0]
-    for i in range(1, len(all_clauses)): # if i in conj
-        if i in conj:
-            combined_clauses.append(current_clause)
-            current_clause = all_clauses[i]
-        else:
-            current_clause += " " + all_clauses[i]
-    combined_clauses.append(current_clause)
    
     print(f"clauses: {all_clauses}")
-    return len(all_clauses)
+    return len(all_clauses), all_clauses
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
 @app.route("/subordinate_clauses", methods=["POST"])
@@ -360,7 +344,7 @@ def subordinate_clauses(text):
 @app.route("/syntactic_subordination_index", methods=["POST"])
 def syntactic_subordination_index(text):
     total_subordinate, list = subordinate_clauses(text)
-    total_clauses = num_clauses(text)
+    total_clauses, list = num_clauses(text)
 
     if total_clauses == 0:
         return 0, 0, 0
