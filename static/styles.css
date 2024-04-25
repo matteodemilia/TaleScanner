@@ -10,6 +10,7 @@
   font-family: sans-serif;
 }
 
+
 /* ---- [ HEADBAR ] ---- */
 header {
   background-color: var(--white-blue);
@@ -172,7 +173,7 @@ body {
 
 .about-inner-box {
   list-style-type: none;
-  
+
 }
 
 .about-inner-lists {
@@ -187,7 +188,8 @@ body {
   padding-top: 5px;
   padding-bottom: 10px;
   border-radius: 4px;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Apply a shadow */
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+  /* Apply a shadow */
 }
 
 .homepage-screenshot {
@@ -223,9 +225,7 @@ body {
 
 }
 
-.about-list-item {
-
-}
+.about-list-item {}
 
 
 
