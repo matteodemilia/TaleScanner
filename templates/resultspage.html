@@ -148,20 +148,11 @@
                             plurality, roots, special cases, and more. Because of this, error cases
                             in morpheme count is common, and should be used as a relative growth tool.
                             <br><br>       
-                            Lemmas:  
-                            {% for lemma in morphemes.list %}
-                                {{lemma}}
-                            {% endfor %}
-                            <br><br>
+
                             Bound: {{morphemes.bound}}
-                            {%for bound in morphemes.bound %}
-                                {{morphemes.bound}}
-                            {% endfor %}
                             <br><br>
                             Free: {{morphemes.free}}
-                            <!-- {% for free in morphemes.free %}
-                                {{morphemes.free}}
-                            {% endfor %} -->
+
                         </p>
                     </div>
                 </div>
@@ -169,7 +160,7 @@
 
                 <!-- Total Clauses Result Output -->
                 {% if 'totalClauses' in selected_analysis %}
-                <p><strong>Total Clauses:</strong> {{ totalclauses }}</p>
+                <p><strong>Total Clauses:</strong> {{ totalclauses.numClauses }}</p>
                 <div class = "details-accordian">
                     <input type = "checkbox" name = "accordian" id = "totalClauses-details-input">
                     <label for = "totalClauses-details-input"> details </label>
@@ -179,13 +170,23 @@
                             subject and a predicate. There are several types of clauses, and it can be difficult
                             to determine each type simultaneously in the same process. This tool uses generalized
                             patterns to help determine all types of clauses, but specializes in main clause identification. 
-                            <br> 
-                            Tale Scanner determines clauses by ___
-                            <br>
+                            <br><br>
+                            The number of clauses feature takes into account all kinds of clauses- independent, subordinate (dependent), and more specific types of subordinate clauses such as adjective, adverbial, and noun clauses.
+                            <br><br>
+                            The number of clauses is determined by tokenizing the input and iterates through each sentence and then the words (tokens). 
+                            For each sentence, it finds the root token (usually the main verb). It also finds other verbs in the sentence as it may be part of the clause. 
+                            Using these verbs, it finds the start and end indices of the clause in the sentence, which is accomplished by analyzing the dependency relationships and finding tokens that are related to the verbs. 
+                            These clauses are then stored into a list.
+                            <br><br>
+                            <span style="color: red">WARNING:</span> 
+                            The number of clauses may not be accurate, more commonly those with conjunctions that are in the middle of the sentences. 
+                            We are also currently unable to extract each clause and display it accurately. 
+                            <br><br>
                             Based on your text:
                             <br>
-                            <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;"></span>
-                            
+                            There are <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalclauses.numClauses}}]</span> total clauses.
+                            <br>
+                            <!--First clause: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalclauses.list[0] }}]</span> -->
                         </p>
                     </div>
                 </div>
@@ -208,13 +209,17 @@
                             which checks whether the token is marked as relcl (relative clause), advcl (adverbial clause), and ccomp (casual complement). 
                             If these are found, the token is stored in a conjunction list.
                             <br><br>
-                            <span style="color: red">WARNING:</span> The number of subordinate clauses may not be accurate, more commonly those with conjunctions that are in the middle of the sentences
+                            <span style="color: red">WARNING:</span> 
+                            The number of subordinate clauses may not be accurate, more commonly those with conjunctions that are in the middle of the sentences.
+                            We are also currently unable to extract each subordinate clause and display it accurately, but can display the conjunctions that were found.
                             <br><br>
                             Based on your text:
                             <br>
                             There are <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.numSubordinate}}]</span>subordinate clauses.
                             <br>
-                            List of conjunctions: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.list | join('] [') }}]</span>
+                            {% if totalsubordinate.numSubordinate > 0 %}
+                                List of conjunctions: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalsubordinate.list | join('] [') }}]</span>
+                            {% endif %}
                         </p>
                     </div>
                 </div>
@@ -235,7 +240,6 @@
                             Based on your text:
                             <br>
                             [Subordinate clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.subordinateClauses }}</span>] / [Total clause count: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.totalClauses }}</span>] = [Syntactic subordination index: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ syntacticsubordination.index }}</span>]
-                          
                         </p>
                     </div>
                 </div>

@@ -82,8 +82,8 @@ def analyze_text():
         num, l = subordinate_clauses(text)
         results["subordinateClauses"] = {"numSubordinate": num, "list": l}
     if "totalClauses" in selected_analysis:
-        clauses =  num_clauses(text)
-        results["totalClauses"] = num_clauses(text)
+        c, l =  num_clauses(text)
+        results["totalClauses"] = {"numClauses": c, "list": l}
     if "syntacticSubordination" in selected_analysis:
         ssindex, sub, numclauses = syntactic_subordination_index(text)
         results["syntacticSubordination"] = {"index": ssindex, "subordinateClauses": sub, "totalClauses": numclauses}
@@ -93,10 +93,6 @@ def analyze_text():
     if "verbErr" in selected_analysis:
         error_count, verb_errors =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors}
-
-    # if "verbClauses" and "verbErr" in selected_analysis:
-    #     ans, ve, cl = verb_clauses(error_count, clauses) # passing verb+clauses to avoid redundancy
-    #     results["verbClauses"] = {"verbClauses": ans, "verbErrors": ve, "totalClauses": cl}
     if "verbClauses" in selected_analysis:
         error_count, verb_errors =  verbEs(text) 
         clauses =  num_clauses(text)
@@ -229,12 +225,15 @@ def find_root_of_sentence(doc):
     return None
 
 # find the other verbs in the sentence
-
 def find_other_verbs(doc, root_token):
     other_verbs = []
+    conjunctions = ["if", "when", "because", "since", "although", "unless", "until"]  # words that wern't working
+
     for token in doc:
         if token.pos_ == "VERB" and token != root_token:
             if token.dep_ in ["acl", "advcl", "relcl", "ccomp", "xcomp"]:
+                other_verbs.append(token)
+            elif token.text.lower() in conjunctions:  
                 other_verbs.append(token)
             else:
                 ancestors = list(token.ancestors)
@@ -274,35 +273,25 @@ def num_clauses(text):
 
     for sent in doc.sents:
         root_token = find_root_of_sentence(sent)
-        if root_token is None:
-            continue
+        if root_token is None or root_token.pos_ != "VERB":
+            continue  # Skip if no root token or root token is not a verb
 
         other_verbs = find_other_verbs(sent, root_token)
         all_verbs = [root_token] + other_verbs
 
-        clause_token_spans = []
-        for verb in all_verbs:
-            clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
-            clause_token_spans.append(clause_token_span)
+        # Identify main clause
+        main_clause_span = get_clause_token_span_for_verb(root_token, sent, all_verbs)
+        main_clause = sent[main_clause_span[0]:main_clause_span[1]].text.strip()
+        all_clauses.append(main_clause)
 
-        for start, end in clause_token_spans:
-            clause = sent[start:end].text.strip()
+        # Identify subordinate clauses
+        for verb in other_verbs:
+            clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
+            clause = sent[clause_token_span[0]:clause_token_span[1]].text.strip()
             all_clauses.append(clause)
 
-    # Combine clauses connected by conjunctions
-    combined_clauses = []
-    conj = ["while", "since", "whenever", "because", "although", "as"]
-    current_clause = all_clauses[0]
-    for i in range(1, len(all_clauses)): # if i in conj
-        if i in conj:
-            combined_clauses.append(current_clause)
-            current_clause = all_clauses[i]
-        else:
-            current_clause += " " + all_clauses[i]
-    combined_clauses.append(current_clause)
-   
     print(f"clauses: {all_clauses}")
-    return len(all_clauses)
+    return len(all_clauses), all_clauses
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
 @app.route("/subordinate_clauses", methods=["POST"])
@@ -360,7 +349,7 @@ def subordinate_clauses(text):
 @app.route("/syntactic_subordination_index", methods=["POST"])
 def syntactic_subordination_index(text):
     total_subordinate, list = subordinate_clauses(text)
-    total_clauses = num_clauses(text)
+    total_clauses, list = num_clauses(text)
 
     if total_clauses == 0:
         return 0, 0, 0
@@ -402,7 +391,7 @@ def verbEs(texts):
 @app.route("/words_per_clause", methods=["POST"])
 def words_per_clause(text):
     words, f, l = total_words(text)
-    clauses = num_clauses(text)
+    clauses, l = num_clauses(text)
 
     if clauses == 0:
         return 0, 0, 0
@@ -434,46 +423,52 @@ def morph(text):
     free = []
     bound = []
     for token in doc:
-        word = str(token)
-        data = m.parse(word)
-
-        print("MORPH:   ", data)
-
-        status = data['status']
-        word = data['word']
-        morpheme_count = data['morpheme_count']
-            
-        print("Morpheme Count:", morpheme_count)
-        if status != 'NOT_FOUND':
-            tree = data['tree']
-            if 'tree' in data:
-                tree = data['tree']                
-                for item in tree:
-                    if 'children' in item:  # If it's a free morpheme
-                        free_morpheme = item['children'][0]['text']
-                        #free_type = item['type']
-                        free.append(free_morpheme)
-                    else:  # If it's a bound morpheme
-                        bound_morpheme = item['text']
-                        #bound_type = item['type']
-                        bound.append(bound_morpheme)
-            else:
-                print("'tree' key not found in data dictionary.")
-        lemma.append(token.lemma_)
-        tense = token.morph.get("Tense")
-        plur = token.morph.get("Number")
-        #print(token, tense, plur)
-        if (token.is_punct == True):
-            pass
+        if (token.is_punct == True): #need to get rid of punctuations that mess up tokenization and morphemes library
+            token = "bad input" #changes the token so the program stays happy
+            pass #skip this token for parsing
         else:
-            if plur == ["Plur"]:
+            word = str(token)
+            data = m.parse(word)
+            #print("MORPH:   ", data)
+            status = data['status']
+            word = data['word']
+            morpheme_count = data['morpheme_count']
+            
+            #print("Morpheme Count:", morpheme_count)
+            if word.isalpha() == False:
+                pass
+            elif status != 'NOT_FOUND':
+                tree = data['tree']
+                if 'tree' in data:
+                    tree = data['tree']                
+                    for item in tree:
+                        if 'children' in item:  # If it's a free morpheme
+                            free_morpheme = item['children'][0]['text']
+                            free.append(free_morpheme)
+                        else:  # If it's a bound morpheme
+                            bound_morpheme = item['text']
+                            bound.append(bound_morpheme)
+                else:
+                    print("tree key not found in library")
+                
+            lemma.append(token.lemma_)
+            tense = token.morph.get("Tense")
+            plur = token.morph.get("Number")
+            verbform = token.morph.get("VerbForm")
+            print("token: ",token, "  pos: ",token.pos_, "  Morph: ", token.morph )
+            if (token.is_punct == True):
+                pass
+            else:
+                if plur == ["Plur"]:
+                    counter = counter + 1
+                elif tense == ["Past"]:
+                    counter = counter + 1
+                elif verbform == ["Part"]:
+                    counter = counter + 1
                 counter = counter + 1
-            if tense == ["Past"]:
-                counter = counter + 1
-            counter = counter + 1
-        lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
-        free = list(set(free))
-        bound = list(set(bound))
+            lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
+            free = list(set(free))
+            bound = list(set(bound))
     return counter, lemma, bound, free
 
 
