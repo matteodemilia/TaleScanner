@@ -139,8 +139,6 @@
                                 <li class = "about-list-item">Average words per clause within the text</li>
                             </ol>
                             <br>
-
-                                test test
                             <p>
                             Three of the analysis choices take significantly longer to analyze than the remaining seven choices.
                             The longest analysis time is for analyzing morphemes, with an average of [1.4 seconds] per [10 words] in the text. 
@@ -148,7 +146,7 @@
                             averaging at approximately [1 second] per [10 words] in the text. The remaining seven analysis choices take [&lt;1 second] 
                             to process any number of words (&gt;600 words has not been tested extensively for time)
                             </p>
-                            <br><br>
+                            <br>
                             <p>
                             By returning to the homepage via the navigation headbar (Tale Scanner logo), the user can retain all submission choices from the previous run 
                             and utilize them instantaneously for any future run(s).
@@ -263,8 +261,10 @@
                                 <li>Some number formats (11:45, 50.45, 1/2, etc.)</li>
                             </ol>
                             <br>
+                            <p>
                             The following is an example of segmenting a sentence into smaller tokens:
-                            <br><br>
+                            </p>
+                            
                             <img src="/static/images/tokenization-image.png" alt="tokenization-image" width = "40%" class = "tokenization-image img-border">
                         </p>
 
@@ -276,12 +276,38 @@
                         <!-- SUBMAJOR section: analysis processes -->
                         <h3>Tale Scanner Analysis</h3>
                         <p>
-
+                            In order to provide users with all of the tools necessary to conduct successful analysis, Tale Scanner highlights 
+                            process details for each of the analysis types. When conducting analysis through Tale Scanner, the user will have access 
+                            to dynamic analysis information via the details drop-downs. To provide more information on the analysis processes and to identify 
+                            possible parameter errors, please refer to the following sections for specific analysis process information. 
                         </p>
 
                         <h4>Word Counts and Type Token Ratio</h4>
                         <p>
+                            To determine the total word count and total unique word count, Tale Scanner utilizes the spaCy natural language processing library. 
+                            Once the user submits the necessary information, the body of text is processed through the spaCy pipeline, where segmenting and tokenization occurs. 
+                            When segmenting the text, words are tokenized by the identification of "barriers" between the words. These barriers can take the form of 
+                            white spaces (' '), varying punctuation ('!', '?', '.', etc), and varying symbols.
+                            <br><br>
+                            Error parameters for total word count: 
+                            <br>
+                            <ol>
+                                <li>[Character alternatives]: replacement characters break segmentation (e.g. "repl@c3ment" = "repl" "c" "3" "ment" = four words)</li>
+                                <li>[Symbols]: symbols are often a segment barrier (e.g. "smith@gmail.com" = "smith" "gmail" "com" = three words)</li>
+                                <li>[Non-English language]: other languages follow different rules, and can use different characters (e.g. "いただきます" has unidentifiable characters = zero words)</li>
+                                <li>[Excess numbers]: numbers count as words, but some formats create barriers (e.g. "12:35" = "12" "35" = two words)</li>
 
+                            </ol>
+                            <br>
+                            <p>
+                                Once the body of text has been segmented and tokenized, it is placed within a list containing all generated word tokens. To determine total unique word count, 
+                                a python function is utilized to create a new list containing only unique word tokens. The unique word list is then counted just as the total word count is. Because of this, 
+                                the unique word count is affected by the same error parameters as total word count. As long as the body of text avoids said error parameters, the unique word count 
+                                will provide the most conistently accurate result of all Tale Scanner analysis processes. 
+                                <br><br>
+                                The type token ratio(TTR) is dependent on the outputs of the total word and total unique word count functions. TTR is calculated by dividing the total unique word count, by the total word count. 
+                                Assuming word count parameter barriers are avoided, the TTR will always provide an accurate result.
+                            </p>
                         </p>
 
                         <h4>Morphemes</h4>
