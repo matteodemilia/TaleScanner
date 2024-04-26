@@ -291,7 +291,7 @@ def num_clauses(text):
             all_clauses.append(clause)
 
     print(f"clauses: {all_clauses}")
-    return len(all_clauses)
+    return len(all_clauses), all_clauses
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
 @app.route("/subordinate_clauses", methods=["POST"])
@@ -391,7 +391,7 @@ def verbEs(texts):
 @app.route("/words_per_clause", methods=["POST"])
 def words_per_clause(text):
     words, f, l = total_words(text)
-    clauses = num_clauses(text)
+    clauses, l = num_clauses(text)
 
     if clauses == 0:
         return 0, 0, 0

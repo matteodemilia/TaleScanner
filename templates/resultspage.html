@@ -171,7 +171,12 @@
                             to determine each type simultaneously in the same process. This tool uses generalized
                             patterns to help determine all types of clauses, but specializes in main clause identification. 
                             <br><br>
-                            Tale Scanner determines clauses by ___
+                            The number of clauses feature takes into account all kinds of clauses- independent, subordinate (dependent), and more specific types of subordinate clauses such as adjective, adverbial, and noun clauses.
+                            <br><br>
+                            The number of clauses is determined by tokenizing the input and iterates through each sentence and then the words (tokens). 
+                            For each sentence, it finds the root token (usually the main verb). It also finds other verbs in the sentence as it may be part of the clause. 
+                            Using these verbs, it finds the start and end indices of the clause in the sentence, which is accomplished by analyzing the dependency relationships and finding tokens that are related to the verbs. 
+                            These clauses are then stored into a list.
                             <br><br>
                             <span style="color: red">WARNING:</span> 
                             The number of clauses may not be accurate, more commonly those with conjunctions that are in the middle of the sentences. 
