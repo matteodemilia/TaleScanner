@@ -96,7 +96,7 @@ def analyze_text():
     if "verbClauses" in selected_analysis:
         error_count, verb_errors, badverb =  verbEs(text) 
         clauses =  num_clauses(text)
-        ans, ve, cl = verb_clauses(error_count, clauses) 
+        ans = verb_clauses(error_count, clauses) 
         results["verbClauses"] = {"verbClauses": ans, "verbErrors": error_count, "totalClauses": clauses}
     if "wordsClauses" in selected_analysis:
         ans, w, c = words_per_clause(text)
@@ -408,11 +408,11 @@ def words_per_clause(text):
 @app.route("/verbClauses", methods=["POST"])
 def verb_clauses(verbs, clauses):
     if clauses == 0:
-        return 0, 0, 0
+        return 0
+    print(clauses)
+    ratio = round((verbs/len(clauses)),2)
 
-    ratio = round((verbs/clauses),2)
-
-    return ratio, verbs, clauses
+    return ratio
 
     
 # REQUIREMENT 4 - Morphemes
