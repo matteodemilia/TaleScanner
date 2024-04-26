@@ -292,7 +292,12 @@
 
                         <h4>Morphemes</h4>
                         <p>
-                            
+                            Morphemes are the smallest units of a word that cannot be further divided, and they are sorted into two general categories: Free and Bound.
+                            Free morphemes can be used in that form, spoken or written, and convey their meaning. Bound Morphemes are pieces that attach to free morphemes to change the meaning of that word.
+                            Tale Scanner uses two ways to get information on morphemes from the user input: spaCy and Morphemes python library. 
+                            To get an accurate count of the amount of morphemes we utilized spaCy as it has a robust ability to decipher many aspects of a given word.  Then seperating the word into bound and free morphemes is a bit more of a challenge as that is 
+                            a bit more contested area of thought. This is where the Morphemes library comes in because it holds a vast library of english words broken down into their morophological aspects.
+
                         </p>
 
                         <h4>Clauses and Syntactic Subordination Index</h4>
@@ -322,8 +327,13 @@
 
                         <h4>Verb Errors and Verb Error Ratio</h4>
                         <p>
-
+                            Tale Scanner uses a python library called Gramformer which uses generative models to detect verb usage errors. It has been built and trained 
+                            to intake a sentence and return a fixed version of it. With this we can evaluate the sentence versus the sentence returned and find the change which 
+                            the model has produced. Since it is a generative machine model it can return solutions that we humans would agree with but overall it is precise and effective. 
+                            Using this model we can count the number of errors, isolote the errors and return them to the user interface (results page). This also ties into the Verb Error ratio
+                            which is the number of verb errors divided by the number of clauses that are present in the given text.
                         </p>
+
 
                     </li>
                 </ul>

@@ -423,46 +423,52 @@ def morph(text):
     free = []
     bound = []
     for token in doc:
-        word = str(token)
-        data = m.parse(word)
-
-        print("MORPH:   ", data)
-
-        status = data['status']
-        word = data['word']
-        morpheme_count = data['morpheme_count']
-            
-        print("Morpheme Count:", morpheme_count)
-        if status != 'NOT_FOUND':
-            tree = data['tree']
-            if 'tree' in data:
-                tree = data['tree']                
-                for item in tree:
-                    if 'children' in item:  # If it's a free morpheme
-                        free_morpheme = item['children'][0]['text']
-                        #free_type = item['type']
-                        free.append(free_morpheme)
-                    else:  # If it's a bound morpheme
-                        bound_morpheme = item['text']
-                        #bound_type = item['type']
-                        bound.append(bound_morpheme)
-            else:
-                print("'tree' key not found in data dictionary.")
-        lemma.append(token.lemma_)
-        tense = token.morph.get("Tense")
-        plur = token.morph.get("Number")
-        #print(token, tense, plur)
-        if (token.is_punct == True):
-            pass
+        if (token.is_punct == True): #need to get rid of punctuations that mess up tokenization and morphemes library
+            token = "bad input" #changes the token so the program stays happy
+            pass #skip this token for parsing
         else:
-            if plur == ["Plur"]:
+            word = str(token)
+            data = m.parse(word)
+            #print("MORPH:   ", data)
+            status = data['status']
+            word = data['word']
+            morpheme_count = data['morpheme_count']
+            
+            #print("Morpheme Count:", morpheme_count)
+            if word.isalpha() == False:
+                pass
+            elif status != 'NOT_FOUND':
+                tree = data['tree']
+                if 'tree' in data:
+                    tree = data['tree']                
+                    for item in tree:
+                        if 'children' in item:  # If it's a free morpheme
+                            free_morpheme = item['children'][0]['text']
+                            free.append(free_morpheme)
+                        else:  # If it's a bound morpheme
+                            bound_morpheme = item['text']
+                            bound.append(bound_morpheme)
+                else:
+                    print("tree key not found in library")
+                
+            lemma.append(token.lemma_)
+            tense = token.morph.get("Tense")
+            plur = token.morph.get("Number")
+            verbform = token.morph.get("VerbForm")
+            print("token: ",token, "  pos: ",token.pos_, "  Morph: ", token.morph )
+            if (token.is_punct == True):
+                pass
+            else:
+                if plur == ["Plur"]:
+                    counter = counter + 1
+                elif tense == ["Past"]:
+                    counter = counter + 1
+                elif verbform == ["Part"]:
+                    counter = counter + 1
                 counter = counter + 1
-            if tense == ["Past"]:
-                counter = counter + 1
-            counter = counter + 1
-        lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
-        free = list(set(free))
-        bound = list(set(bound))
+            lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
+            free = list(set(free))
+            bound = list(set(bound))
     return counter, lemma, bound, free
 
 
