@@ -94,7 +94,7 @@ def analyze_text():
         error_count, verb_errors, badverb =  verbEs(text)
         results["verbErr"] = {"count": error_count, "list": verb_errors, "bad": badverb}
     if "verbClauses" in selected_analysis:
-        error_count, verb_errors =  verbEs(text) 
+        error_count, verb_errors, badverb =  verbEs(text) 
         clauses =  num_clauses(text)
         ans, ve, cl = verb_clauses(error_count, clauses) 
         results["verbClauses"] = {"verbClauses": ans, "verbErrors": error_count, "totalClauses": clauses}
@@ -364,6 +364,8 @@ def verbEs(texts):
     doc = nlp(texts)
     counter = 0
     bad_sentences = []
+
+    altverb = []
     assert doc.has_annotation("SENT_START")
     for sent in doc.sents:
         # print(sent.text)
@@ -378,14 +380,14 @@ def verbEs(texts):
                 pass
             else:
                 for data in hold:
-                    altverb = data[1]
+                    altverb.append(data[1])
                     counter = counter + 1
                     bad_sentences.append(sent1)
             #print(altverb)
             
 
         # print("-" * 100)
-    return counter, bad_sentences
+    return counter, bad_sentences, altverb
 
 # Addional Requirement - Words per clause
 @app.route("/words_per_clause", methods=["POST"])
