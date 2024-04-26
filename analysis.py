@@ -91,8 +91,8 @@ def analyze_text():
         counter, lemma, bound, free = morph(text)
         results["morpheme"] = {"count": counter, "list": lemma, "bound": bound, "free": free}
     if "verbErr" in selected_analysis:
-        error_count, verb_errors =  verbEs(text)
-        results["verbErr"] = {"count": error_count, "list": verb_errors}
+        error_count, verb_errors, badverb =  verbEs(text)
+        results["verbErr"] = {"count": error_count, "list": verb_errors, "bad": badverb}
     if "verbClauses" in selected_analysis:
         error_count, verb_errors =  verbEs(text) 
         clauses =  num_clauses(text)

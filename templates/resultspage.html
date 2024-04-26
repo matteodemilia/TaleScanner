@@ -257,8 +257,9 @@
                             Confidence rating: VERY HIGH (>99%)
                             <br><br>
                             Sentences with verb errors: <br> 
-                            {% for error in verberrors.list %}
-                                <li>{{error}}</li>
+                            {% for index in range(verberrors.list|length) %}
+                                <li>{{ verberrors.list[index] }}</li>
+                                <p>Bad Verb: {{ verberrors.bad[index] }}</p>
                             {% endfor %}
                                 <!-- {{ verberrors.list | join('') }} -->
                         </p>
