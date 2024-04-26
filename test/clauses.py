@@ -119,18 +119,29 @@ def num_clauses(text):
         if root_token is None or root_token.pos_ != "VERB":
             continue  # Skip if no root token or root token is not a verb
 
+        print(f"root token: {root_token}")
+
         other_verbs = find_other_verbs(sent, root_token)
         all_verbs = [root_token] + other_verbs
+        
+        print(f"all verbs: {all_verbs}")
 
         # Identify main clause
         main_clause_span = get_clause_token_span_for_verb(root_token, sent, all_verbs)
+
+        print(f"main clause span: {main_clause_span}")
+
         main_clause = sent[main_clause_span[0]:main_clause_span[1]].text.strip()
+        print(f"main clause: {main_clause}")
+
         all_clauses.append(main_clause)
 
         # Identify subordinate clauses
         for verb in other_verbs:
             clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
+            print(f" dep clause token span: {clause_token_span}")
             clause = sent[clause_token_span[0]:clause_token_span[1]].text.strip()
+            print(f"dep clause: {clause}")
             all_clauses.append(clause)
 
     print(f"clauses: {all_clauses}")
