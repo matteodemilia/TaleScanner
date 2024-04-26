@@ -225,12 +225,15 @@ def find_root_of_sentence(doc):
     return None
 
 # find the other verbs in the sentence
-
 def find_other_verbs(doc, root_token):
     other_verbs = []
+    conjunctions = ["if", "when", "because", "since", "although", "unless", "until"]  # words that wern't working
+
     for token in doc:
         if token.pos_ == "VERB" and token != root_token:
             if token.dep_ in ["acl", "advcl", "relcl", "ccomp", "xcomp"]:
+                other_verbs.append(token)
+            elif token.text.lower() in conjunctions:  
                 other_verbs.append(token)
             else:
                 ancestors = list(token.ancestors)
@@ -270,23 +273,25 @@ def num_clauses(text):
 
     for sent in doc.sents:
         root_token = find_root_of_sentence(sent)
-        if root_token is None:
-            continue
+        if root_token is None or root_token.pos_ != "VERB":
+            continue  # Skip if no root token or root token is not a verb
 
         other_verbs = find_other_verbs(sent, root_token)
         all_verbs = [root_token] + other_verbs
 
-        clause_token_spans = []
-        for verb in all_verbs:
-            clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
-            clause_token_spans.append(clause_token_span)
+        # Identify main clause
+        main_clause_span = get_clause_token_span_for_verb(root_token, sent, all_verbs)
+        main_clause = sent[main_clause_span[0]:main_clause_span[1]].text.strip()
+        all_clauses.append(main_clause)
 
-        for start, end in clause_token_spans:
-            clause = sent[start:end].text.strip()
+        # Identify subordinate clauses
+        for verb in other_verbs:
+            clause_token_span = get_clause_token_span_for_verb(verb, sent, all_verbs)
+            clause = sent[clause_token_span[0]:clause_token_span[1]].text.strip()
             all_clauses.append(clause)
-   
+
     print(f"clauses: {all_clauses}")
-    return len(all_clauses), all_clauses
+    return len(all_clauses)
 
 # REQUIREMENT 6 - Number of subordinate/dependent clauses
 @app.route("/subordinate_clauses", methods=["POST"])
