@@ -290,18 +290,18 @@
 
                         <h4>Word Counts and Type Token Ratio</h4>
                         <p>
-                            To determine the total word count and total unique word count, Tale Scanner utilizes the spaCy natural language processing library. 
-                            Once the user submits the necessary information, the body of text is processed through the spaCy pipeline, where segmenting and tokenization occurs. 
-                            When segmenting the text, words are tokenized by the identification of "barriers" between the words. These barriers can take the form of 
-                            white spaces (' '), varying punctuation ('!', '?', '.', etc), and varying symbols.
+                            To determine the total word count and total unique word count, Tale Scanner checks each character of the text. 
+                            A word is formed if the character is a letter, a number, a dash, or other symbols (e.g. '@', '%', and '*') . 
+                            It will stop forming a word when a white space or punctuation is found. 
+                            As of now, if unusual symbols are used (e.g. '@', '%', and '*'), it will not be displayed in the details section of the results page. 
                             <br><br>
-                            Error parameters for total word count: 
+                            Special cases for total word count: 
                             <br>
                             <ol>
-                                <li>[Character alternatives]: replacement characters break segmentation (e.g. "repl@c3ment" = "repl" "c" "3" "ment" = four words)</li>
-                                <li>[Symbols]: symbols are often a segment barrier (e.g. "smith@gmail.com" = "smith" "gmail" "com" = three words)</li>
-                                <li>[Non-English language]: other languages follow different rules, and can use different characters (e.g. "いただきます" has unidentifiable characters = zero words)</li>
-                                <li>[Excess numbers]: numbers count as words, but some formats create barriers (e.g. "12:35" = "12" "35" = two words)</li>
+                                <li>[Character alternatives]: replacement characters counts as 1 (e.g. "repl@c3ment" = “replc3ment” = 1 word)</li>
+                                <li>[Symbols]: symbols count as 1 (e.g. "smith@gmail.com" = "smithgmailcom” = 1 word)</li>
+                                <li>[Non-English language]: other languages follow different rules, and can use different characters (e.g. "おはようございます" translates to “Good Morning” but counts as 1 word)</li>
+                                <li>[Numbers]: numbers count as words, including times (e.g. "12:35" = "1235" = 1 word)</li>
 
                             </ol>
                             <br>

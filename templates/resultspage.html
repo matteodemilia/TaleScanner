@@ -70,11 +70,10 @@
                         <p>
                             Word count is the most foundational process in natural language processing.
                             <br>
-                            First, the input text must be segmented, with each word isolated: we do this by parsing all of the text
-                            into individual word tokens, and determining the number of tokens identified. Tale Scanner's segmentation
-                            will end a token at some, but not all, unusual symbols (e.g. '@', '%', and '*'). To maximize accuracy, please
+                            Each character of the text will be checked. A word is formed if the character is a letter, a number,  a dash, or other symbols (e.g. '@', '%', and '*') . 
+                            It will stop forming a word when a white space or punctuation is found.  To maximize accuracy, please
                             ommit abnormal symbols from your text. For further information, refer to the 'About' page.
-                            <br>
+                            <br><br>
                             Some examples from your text:
                             <br>
                             First identified token: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">[{{ totalwords.firstword}}]</span>
