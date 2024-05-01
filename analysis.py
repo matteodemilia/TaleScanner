@@ -364,29 +364,22 @@ def verbEs(texts):
     doc = nlp(texts)
     counter = 0
     bad_sentences = []
-
     altverb = []
     assert doc.has_annotation("SENT_START")
     for sent in doc.sents:
-        # print(sent.text)
         sent1 = sent.text
-        #print(sent1)
         corrected_sentences = gf.correct(sent1, max_candidates=1)
-
-        test = str(corrected_sentences)
         for corrected_sentence in corrected_sentences:
             hold = gf.get_edits(sent1, corrected_sentence)
-            if hold == []:
+            if hold == [""]:
+                print("should be passing")
                 pass
             else:
-                for data in hold:
-                    altverb.append(data[1])
-                    counter = counter + 1
-                    bad_sentences.append(sent1)
-            #print(altverb)
-            
-
-        # print("-" * 100)
+                if hold:
+                    for data in hold:
+                        altverb.append(data[1])
+                        counter = counter + 1
+                        bad_sentences.append(sent1)
     return counter, bad_sentences, altverb
 
 # Addional Requirement - Words per clause
@@ -399,10 +392,7 @@ def words_per_clause(text):
         return 0, 0, 0
     
     ans = round((words/clauses),2)
-
     return ans, words, clauses
-
-
 
 # REQUIREMENT 9 - Verb errors divided by the number of clauses
 @app.route("/verbClauses", methods=["POST"])
@@ -431,12 +421,9 @@ def morph(text):
         else:
             word = str(token)
             data = m.parse(word)
-            #print("MORPH:   ", data)
             status = data['status']
             word = data['word']
-            morpheme_count = data['morpheme_count']
             
-            #print("Morpheme Count:", morpheme_count)
             if word.isalpha() == False:
                 pass
             elif status != 'NOT_FOUND':
@@ -465,13 +452,18 @@ def morph(text):
                     counter = counter + 1
                 elif tense == ["Past"]:
                     counter = counter + 1
+                    if token.text.endswith('ed'):
+                        bound.append('ed')
                 elif verbform == ["Part"]:
                     counter = counter + 1
+                    bound.append("ing")
                 counter = counter + 1
             lemma = list(set(lemma)) #sends only unique lemmas, reduces mutliple of same word.
             free = list(set(free))
             bound = list(set(bound))
-    return counter, lemma, bound, free
+            morpheme_free = ', '.join(free)
+            morpheme_bound =  ', '.join(bound)
+    return counter, lemma, morpheme_bound, morpheme_free
 
 
 if __name__ == "__main__":

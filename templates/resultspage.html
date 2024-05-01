@@ -148,9 +148,9 @@
                             in morpheme count is common, and should be used as a relative growth tool.
                             <br><br>       
 
-                            Bound: {{morphemes.bound}}
+                            Bound: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{morphemes.bound}}</span>
                             <br><br>
-                            Free: {{morphemes.free}}
+                            Free: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{morphemes.free}}</span>
 
                         </p>
                     </div>
@@ -259,7 +259,7 @@
                             Sentences with verb errors: <br> 
                             {% for index in range(verberrors.list|length) %}
                                 <li>{{ verberrors.list[index] }}</li>
-                                <p>Bad Verb: {{ verberrors.bad[index] }}</p>
+                                <p>Bad Verb: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ verberrors.bad[index] }}</span></p>
                             {% endfor %}
                                 <!-- {{ verberrors.list | join('') }} -->
                         </p>
