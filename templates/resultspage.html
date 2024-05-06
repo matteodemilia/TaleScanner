@@ -147,7 +147,11 @@
                             plurality, roots, special cases, and more. Because of this, error cases
                             in morpheme count is common, and should be used as a relative growth tool.
                             <br><br>       
-
+                            <span style="color: red">WARNING:</span> 
+                            The count is determined by the spaCy python library. The free and bound morphemes are
+                            determined by the Morphemes python library. The actual count is likely to be correct with little variance,
+                            and the free and bound morphemes may not add up to the count as it is drawn from a different dataset.
+                            <br><br>
                             Bound: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{morphemes.bound}}</span>
                             <br><br>
                             Free: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{morphemes.free}}</span>
@@ -254,14 +258,15 @@
                         <p>
                             The found verb errors are listed below.
                             <br><br>
-                            Confidence rating: VERY HIGH (>99%)
+                            <span style="color: red">WARNING:</span> 
+                            The following errors listed are decided by a generative model and may not always be accurate.
+                            The word could not be actually erroneous but the model may recommend usage of another verb form.
                             <br><br>
                             Sentences with verb errors: <br> 
                             {% for index in range(verberrors.list|length) %}
                                 <li>{{ verberrors.list[index] }}</li>
                                 <p>Bad Verb: <span style="font-weight: bold; color: #004e8d; font-family: 'Courier New', Courier, monospace;">{{ verberrors.bad[index] }}</span></p>
                             {% endfor %}
-                                <!-- {{ verberrors.list | join('') }} -->
                         </p>
                     </div>
                 </div>
